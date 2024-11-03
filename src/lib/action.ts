@@ -83,3 +83,19 @@ export const signInCreadentials = async (data : TSignInSchema)=>{
 export const createOrganization = async (data : TOrganizationSchema)=>{
 
 }
+
+export const updateOrganization = async ()=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+export const addPaymentMethod = async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
