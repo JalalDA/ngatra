@@ -34,9 +34,11 @@ export default async function Sites({ limit }: { limit?: number }) {
       <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
         No Sites Yet
       </h1>
-      <p className="mt-2 text-lg text-gray-500 dark:text-gray-400">
-        You don't have any sites yet. Create one to get started.
-      </p>
+      <div className="mt-2 text-lg text-gray-500 dark:text-gray-400">
+      {
+        `You don't have any sites yet. Create one to get started.`
+      }
+      </div>
     </div>
   );
 }
