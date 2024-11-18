@@ -16,9 +16,9 @@ export default async function Sites({ limit }: { limit?: number }) {
 
   return sites.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {sites.map((site) => (
-        <TransactionCard key={site.id} data={site} />
-      ))}
+      {/* {sites.map((site) => (
+        // <TransactionCard key={site.id} data={site} />
+      ))} */}
     </div>
   ) : (
     <div className="mt-20 flex flex-col items-center space-x-4">

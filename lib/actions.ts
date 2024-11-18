@@ -158,22 +158,22 @@ export const createProduct = async (formData: FormData) => {
   const price = parseFloat(formData.get("price") as string);
   const status = formData.get("status") as string;
   try {
-    const [response] = await db
-      .insert(product)
-      .values({
-        code,
-        categoryId,
-        productName,
-        price,
-        vendor,
-        status,
-      })
-      .returning();
+    // const [response] = await db
+    //   .insert(product)
+    //   .values({
+    //     code,
+    //     categoryId,
+    //     productName,
+    //     price,
+    //     vendor,
+    //     status,
+    //   })
+    //   .returning();
 
     // revalidateTag(
     //   `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     // );
-    return response;
+    return "hehe";
   } catch (error: any) {
     if (error.code === "P2002") {
       return {
@@ -204,17 +204,17 @@ export const updateProduct = async (formData: FormData, _id: string) => {
   };
 
   try {
-    const [response] = await db
-      .update(product)
-      .set(setData)
-      .where(eq(product.id, _id))
-      .returning();
+    // const [response] = await db
+    //   .update(product)
+    //   .set(setData)
+    //   .where(eq(product.id, _id))
+    //   .returning();
 
-    return response;
+    // return response;
   } catch (error: any) {
     if (error.code === "P2002") {
       return {
-        error: `This ${key} is already in use`,
+        // error: `This ${key} is already in use`,
       };
     } else {
       return {
@@ -230,30 +230,30 @@ export const createTransactions = async (
   siteId: string,
 ) => {
   const productId = id;
-  const name = orderData?.name as string;
-  const phone = orderData?.phone as string;
-  const params = orderData?.params as string;
-  const qty = parseInt(orderData?.qty as string);
+  // const name = orderData?.name as string;
+  // const phone = orderData?.phone as string;
+  // const params = orderData?.params as string;
+  // const qty = parseInt(orderData?.qty as string);
   const status = "waiting_payment";
   try {
-    const [response] = await db
-      .insert(transaction)
-      .values({
-        siteId,
-        productId,
-        name,
-        phone,
-        params,
-        status,
-        qty,
-      })
-      .returning();
+    // const [response] = await db
+    //   .insert(transaction)
+    //   .values({
+    //     siteId,
+    //     productId,
+    //     name,
+    //     phone,
+    //     params,
+    //     status,
+    //     qty,
+    //   })
+    //   .returning();
 
     // revalidateTag(
     //   `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     // );
     // return transaction id
-    return response;
+    // return response;
   } catch (error: any) {
     return {
       error: error.message,
@@ -267,17 +267,17 @@ export const updateTransactionStatus = async (_id: string, status: string) => {
   };
 
   try {
-    const [response] = await db
-      .update(transaction)
-      .set(setData)
-      .where(eq(transaction.id, _id))
-      .returning();
+    // const [response] = await db
+    //   .update(transaction)
+    //   .set(setData)
+    //   .where(eq(transaction.id, _id))
+    //   .returning();
 
-    return response;
+    // return response;
   } catch (error: any) {
     if (error.code === "P2002") {
       return {
-        error: `This ${key} is already in use`,
+        // error: `This ${key} is already in use`,
       };
     } else {
       return {

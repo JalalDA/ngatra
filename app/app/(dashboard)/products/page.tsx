@@ -27,8 +27,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             </div>
           }
         >
-          {/* @ts-expect-error Server Component */}
-          <Products/>
+          <Products />
         </Suspense>
       </div>
     </div>

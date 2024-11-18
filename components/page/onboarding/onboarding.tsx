@@ -35,9 +35,9 @@ export default function Onboarding() {
         <h2 className="text-3xl font-semibold text-center mb-2">
           Create a new store
         </h2>
-        <p className="text-center text-gray-400 mb-6">
-          Input your store's essential information
-        </p>
+        <div className="text-center text-gray-400 mb-6">
+          {`Input your store's essential information`}
+        </div>
 
         {/* Logo Upload */}
         <div className="flex justify-center mb-6">

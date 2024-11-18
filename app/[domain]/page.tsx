@@ -47,7 +47,7 @@ export default async function SiteHomePage({
 
   return (
     <>
-      <Product/>
+      <Product siteId={"1"}/>
     </>
   );
 }

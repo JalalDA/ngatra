@@ -51,12 +51,7 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: `/login`,
     error: "/login", // Error code passed in query string as ?error=
   },
-  debug: true, // Enable debug mode
-  options: {
-    request: {
-      timeout: 10000, // Increase to 10 seconds
-    },
-  },
+  debug: true, // Enable debug mode,
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,

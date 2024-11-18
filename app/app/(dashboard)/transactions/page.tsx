@@ -22,7 +22,6 @@ export default function AllSites({ params }: { params: { id: string } }) {
             </div>
           }
         >
-          {/* @ts-expect-error Server Component */}
           <Transactions/>
         </Suspense>
       </div>

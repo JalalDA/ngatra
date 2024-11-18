@@ -13,14 +13,19 @@ import va from "@vercel/analytics";
 export default function MySite({initialData,handleSubmit}:{initialData:object,handleSubmit:any}){
     
   const [data, setData] = useState({
+    id: "",
     name: "",
-    subdomain: "",
+    image: "",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    userId: "",
     description: "",
+    imageBlurhash: "",
   });
     const router = useRouter();
     const { update } = useSession();
     useEffect(()=>{
-        setData(initialData)
+        // setData(initialData)
     },[])
     return (
         <form action={async (data:FormData)=>{
@@ -40,7 +45,7 @@ export default function MySite({initialData,handleSubmit}:{initialData:object,ha
             >
               Site Name
             </label>
-            <h2 className="font-cal text-2xl dark:text-white">{initialData.name}</h2>
+            {/* <h2 className="font-cal text-2xl dark:text-white">{initialData.name}</h2> */}
           </div>
 
           <div className="flex flex-col space-y-2">
@@ -50,7 +55,7 @@ export default function MySite({initialData,handleSubmit}:{initialData:object,ha
             >
               Subdomain
             </label>
-            <h2 className="font-cal text-2xl dark:text-white">{initialData.subdomain}.{process.env.NEXT_PUBLIC_ROOT_DOMAIN}</h2>
+            {/* <h2 className="font-cal text-2xl dark:text-white">{initialData.subdomain}.{process.env.NEXT_PUBLIC_ROOT_DOMAIN}</h2> */}
           </div>
 
           <div className="flex flex-col space-y-2">

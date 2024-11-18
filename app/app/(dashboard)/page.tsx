@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 export default async function Overview() {
   const session = await getSession();
   const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.userId, session?.user.id),
+    // where: (sites, { eq }) => eq(sites.userId, session?.user.id),
   });
   if (!data) {
     redirect("/onboarding");

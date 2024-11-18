@@ -21,7 +21,6 @@ export default function CategoriesPage({ params }: { params: { id: string } }) {
             <div className="text-center text-white">Loading categories...</div>
           }
         >
-          {/* @ts-expect-error Server Component */}
           <Categories />
         </Suspense>
       </div>

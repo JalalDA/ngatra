@@ -187,14 +187,15 @@ export default function Order({ product, siteId }: { product: any, siteId: strin
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           onConfirm={async () => {
-            createTransactions(orderData, id, siteId).then(async (res: any) => {
-              if (res.error) {
-                toast.error(res.error);
-              } else {
-                va.track("Order Created", id ? { id } : {});
-                router.push(`/order-detail/${res.id}`); // Redirect to transaction details
-              }
-            });
+            // createTransactions(orderData, id, siteId).then(async (res: any) => {
+            //   if (res.error) {
+            //     toast.error(res.error);
+            //   } else {
+            //     va.track("Order Created", id ? { id } : {});
+            //     router.push(`/order-detail/${res.id}`); // Redirect to transaction details
+            //   }
+            // });
+            alert("confirm payment")
           }}
           orderDetails={{
             productName: product.productName,
