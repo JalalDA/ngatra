@@ -1,0 +1,1 @@
+ALTER TYPE "public"."user_type" RENAME TO "user_role";

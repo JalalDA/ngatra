@@ -1,0 +1,1 @@
+ALTER TABLE "transaction" ADD COLUMN "timestamp" timestamp DEFAULT now() NOT NULL;
