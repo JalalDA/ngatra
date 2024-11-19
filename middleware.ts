@@ -64,7 +64,9 @@ export default async function middleware(req: NextRequest) {
       hostname === "localhost:3000" ||
       hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
       hostname === "namapena.my.id" ||
-      hostname === "ngatrapanel.my.id"
+      hostname === "ngatrapanel.my.id" ||
+      hostname === "www.namapena.my.id" || 
+      hostname === "www.ngatrapanel.my.id"
     ) {
       return NextResponse.rewrite(
         new URL(`/home${path === "/" ? "" : path}`, req.url),
