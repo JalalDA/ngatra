@@ -22,6 +22,8 @@ export default async function middleware(req: NextRequest) {
     .get("host")!
     .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
   // special case for Vercel preview deployment URLs
+
+  console.log({ hostname });
   if (
     hostname.includes("---") &&
     hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
@@ -60,7 +62,9 @@ export default async function middleware(req: NextRequest) {
     // rewrite root application to `/home` folder
     if (
       hostname === "localhost:3000" ||
-      hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
+      hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
+      hostname === "namapena.my.id" ||
+      hostname === "ngatrapanel.my.id"
     ) {
       return NextResponse.rewrite(
         new URL(`/home${path === "/" ? "" : path}`, req.url),
@@ -73,6 +77,8 @@ export default async function middleware(req: NextRequest) {
       hostname,
       `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
     );
+
     return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
   }
+  
 }

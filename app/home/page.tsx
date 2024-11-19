@@ -1,5 +1,6 @@
 import { InlineSnippet } from "@/components/form/domain-configuration";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -12,10 +13,12 @@ export default function HomePage() {
         className="w-48"
       />
       <h1 className="text-white">
-        Edit this page on{" "}
-        <InlineSnippet className="ml-2 bg-blue-900 text-blue-100">
-          app/home/page.tsx
-        </InlineSnippet>
+        Wellcome to ngatra
+        <Link href={"https://app.ngatrapanel.my.id"}>
+          <InlineSnippet className="ml-2 bg-blue-900 text-blue-100">
+            login
+          </InlineSnippet>
+        </Link>
       </h1>
     </div>
   );
