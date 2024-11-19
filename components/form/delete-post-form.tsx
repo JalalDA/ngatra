@@ -13,18 +13,23 @@ export default function DeletePostForm({ postName }: { postName: string }) {
   const router = useRouter();
   return (
     <form
-      action={async (data: FormData) =>
-        window.confirm("Are you sure you want to delete your post?") &&
-        deletePost(data, id, "delete").then((res) => {
-          if (res.error) {
-            toast.error(res.error);
-          } else {
-            va.track("Deleted Post");
-            router.refresh();
-            router.push(`/site/${res.siteId}`);
-            toast.success(`Successfully deleted post!`);
+      action={async (data: FormData) => {
+        if (window.confirm("Are you sure you want to delete your post?")) {
+          try {
+            const res = await deletePost(data, id, "delete");
+            if (res.error) {
+              toast.error(res.error);
+            } else {
+              va.track("Deleted Post");
+              router.refresh();
+              router.push(`/site/${res.siteId}`);
+              toast.success("Successfully deleted post!");
+            }
+          } catch (error) {
+            toast.error("An error occurred while deleting the post.");
           }
-        })
+        }
+      }
       }
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >

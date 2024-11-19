@@ -212,12 +212,56 @@ export const product = pgTable("product", {
   vendor: text("vendor"),
   status: boolean("status"),
 });
+export const masterVendor = pgTable("masterVendor", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  vendorName: text("vendorName"),
+});
+
+export const masterPaymentMethod = pgTable("masterPaymentMethod", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  name: text("name"),
+});
+
+export const siteVendor = pgTable("siteVendor", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  masterVendorId: text("masterVendorId").references(() => masterVendor.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  }),
+  siteId: text("siteId").references(() => sites.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  })
+});
+
+export const sitePaymentMethod = pgTable("sitePaymentMethod", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  masterPaymentMethodId: text("masterPaymentMethodId").references(() => masterPaymentMethod.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  }),
+  siteId: text("siteId").references(() => sites.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  })
+});
+
+
 export const transactionEnum = pgEnum("transaction_status", [
   "waiting_payment",
   "processed",
   "completed",
   "failed",
 ]);
+
 export const transaction = pgTable("transaction", {
   id: text("id")
     .primaryKey()
@@ -285,6 +329,24 @@ export const transactionRelations = relations(transaction, ({ one }) => ({
   }),
 }));
 
-export type SelectSite = typeof sites.$inferSelect;
-export type SelectPost = typeof posts.$inferSelect;
-export type SelectExample = typeof examples.$inferSelect;
+export type TSite = typeof sites.$inferSelect;
+export type TPost = typeof posts.$inferSelect;
+export type TExample = typeof examples.$inferSelect;
+export type TCategory = typeof category.$inferSelect;
+export type TProduct = typeof product.$inferSelect;
+export type TTransaction = typeof transaction.$inferSelect;
+export type TUser = typeof users.$inferSelect;
+export type TSession = typeof sessions.$inferSelect;
+export type TAccount = typeof accounts.$inferSelect;
+export type TVerificationToken = typeof verificationTokens.$inferSelect;
+
+export type TSiteRelations = typeof sitesRelations;
+export type TPostRelations = typeof postsRelations;
+export type TCategoryRelations = typeof categoryRelations;
+export type TProductRelations = typeof productRelations;
+export type TTransactionRelations = typeof transactionRelations;
+export type TUserRelations = typeof userRelations;
+export type TSessionRelations = typeof sessionsRelations;
+export type TAccountRelations = typeof accountsRelations;
+
+export type ETransactionStatus = typeof transactionEnum.enumValues[number]; 

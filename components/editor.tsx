@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 import LoadingDots from "./icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import type { SelectPost } from "@/lib/schema";
+import type { TPost } from "@/lib/schema";
 
-type PostWithSite = SelectPost & { site: { subdomain: string | null } | null };
+type PostWithSite = TPost & { site: { subdomain: string | null } | null };
 
 export default function Editor({ post }: { post: PostWithSite }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();

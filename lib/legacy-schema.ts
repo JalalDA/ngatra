@@ -263,6 +263,6 @@ export const userRelations = relations(users, ({ many }) => ({
   posts: many(posts),
 }));
 
-export type SelectSite = typeof sites.$inferSelect;
-export type SelectPost = typeof posts.$inferSelect;
-export type SelectExample = typeof examples.$inferSelect;
+export type TSite = typeof sites.$inferSelect;
+export type TPost = typeof posts.$inferSelect;
+export type TExample = typeof examples.$inferSelect;

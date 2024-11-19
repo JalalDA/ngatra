@@ -1,11 +1,11 @@
 import Link from "next/link";
 import BlurImage from "./blur-image";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import type { SelectPost } from "@/lib/schema";
+import type { TPost } from "@/lib/schema";
 
 interface BlogCardProps {
   data: Pick<
-    SelectPost,
+    TPost,
     "slug" | "image" | "imageBlurhash" | "title" | "description" | "createdAt"
   >;
 }

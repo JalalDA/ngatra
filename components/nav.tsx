@@ -12,6 +12,8 @@ import {
   PhoneCall,
   Newspaper,
   Globe,
+  CreditCard,
+  UserCircle2,
 } from "lucide-react";
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
@@ -48,6 +50,18 @@ export default function Nav({ children }: { children: ReactNode }) {
           href: `/site/${id}/settings`,
           isActive: segments.includes("settings"),
           icon: <Settings width={18} />,
+        },
+        {
+          name: "Payment Method",
+          href: `/site/${id}/paymentMethod`,
+          isActive: segments.includes("paymentMethod"),
+          icon: <CreditCard width={18} />,
+        },
+        {
+          name: "Vendor",
+          href: `/site/${id}/vendor`,
+          isActive: segments.includes("vendor"),
+          icon: <UserCircle2 width={18} />,
         },
         {
           name: "Transactions",
@@ -97,7 +111,7 @@ export default function Nav({ children }: { children: ReactNode }) {
         href: "/settings",
         isActive: segments[0] === "settings",
         icon: <Settings width={18} />,
-      },
+      }
     ];
   }, [segments]);
 

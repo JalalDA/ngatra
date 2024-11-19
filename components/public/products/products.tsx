@@ -13,13 +13,13 @@ export default async function Products({
 }) {
   // Fetch products from the database with filters applied
   const products = await db.query.product.findMany({
-    // where: (product, { eq, contains, and }) =>
-    //   and(
-    //     eq(product.status, true),
-    //     searchQuery ? contains(product.productName, searchQuery) : true,
-    //     category && category !== "all" ? eq(product.category, category) : true
-    //   ),
-    // orderBy: (product, { asc }) => asc(product.productName),
+    where: (product, { eq, like, and }) =>
+      and(
+        eq(product.status, true),
+        searchQuery ? like(product.productName, `%${searchQuery}%`) : undefined,
+        category && category !== "all" ? eq(product.categoryId, category) : undefined
+      ),
+    orderBy: (product, { asc }) => asc(product.productName),
   });
 
   return (
@@ -60,9 +60,17 @@ export default async function Products({
       {/* Product Grid */}
       {products.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {/* {products.map((product) => (
-            <ProductCard siteId={siteId} key={product.id} data={product} />
-          ))} */}
+          {products.map((product) => (
+            <ProductCard
+              siteId={siteId}
+              key={product.id}
+              data={{
+                ...product,
+                productName: product.productName || "",
+                price: product.price || 0,
+              }}
+            />
+          ))}
         </div>
       ) : (
         <div className="mt-20 flex flex-col items-center space-x-4">

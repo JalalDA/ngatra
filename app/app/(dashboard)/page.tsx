@@ -11,12 +11,15 @@ import { redirect } from "next/navigation";
 
 export default async function Overview() {
   const session = await getSession();
-  const data = await db.query.sites.findFirst({
-    // where: (sites, { eq }) => eq(sites.userId, session?.user.id),
-  });
-  if (!data) {
-    redirect("/onboarding");
+  if(session){
+    const data = await db.query.sites.findFirst({
+      where: (sites, { eq }) => eq(sites.userId, session.user.id),
+    });
+    if (!data) {
+      redirect("/onboarding");
+    }
   }
+  
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
       <div className="flex flex-col space-y-6">

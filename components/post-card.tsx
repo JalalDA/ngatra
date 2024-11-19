@@ -1,5 +1,5 @@
 import BlurImage from "@/components/blur-image";
-import type { SelectPost, SelectSite } from "@/lib/schema";
+import type { TPost, TSite } from "@/lib/schema";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function PostCard({
   data,
 }: {
-  data: SelectPost & { site: SelectSite | null };
+  data: TPost & { site: TSite | null };
 }) {
   const url = `${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
 

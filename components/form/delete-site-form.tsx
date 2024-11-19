@@ -13,20 +13,23 @@ export default function DeleteSiteForm({ siteName }: { siteName: string }) {
   const router = useRouter();
   return (
     <form
-      action={async (data: FormData) =>
-        window.confirm("Are you sure you want to delete your site?") &&
-        deleteSite(data, id, "delete")
-          .then(async (res) => {
-            if (res.error) {
-              toast.error(res.error);
-            } else {
-              va.track("Deleted Site");
-              router.refresh();
-              router.push("/sites");
-              toast.success(`Successfully deleted site!`);
-            }
-          })
-          .catch((err: Error) => toast.error(err.message))
+    action={async (data: FormData) => {
+      if (window.confirm("Are you sure you want to delete your site?")) {
+        try {
+          const res = await deleteSite(data, id, "delete");
+          if (res.error) {
+            toast.error(res.error);
+          } else {
+            va.track("Deleted Site");
+            router.refresh();
+            router.push("/sites");
+            toast.success(`Successfully deleted site!`);
+          }
+        } catch (error) {
+          toast.error("An error occurred while deleting the post.");
+        }
+      }
+    }
       }
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >

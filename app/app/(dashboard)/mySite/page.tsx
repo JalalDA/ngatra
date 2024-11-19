@@ -10,7 +10,7 @@ export default async function MySite() {
   if (!session) {
     redirect("/login");
   }
-  const data  = await db.query.sites.findFirst({
+  const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.userId, session.user.id),
   });
   return (
@@ -21,7 +21,7 @@ export default async function MySite() {
             My Sites
           </h1>
         </div>
-        <Form initialData={{name : data?.name, description : data?.description}} handleSubmit={null}/>
+        <Form initialData={data || {name:"",description:"",subdomain:""}} handleSubmit={null}/>
       </div>
     </div>
   );

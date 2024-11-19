@@ -23,7 +23,7 @@ export default async function ProductPage({
   }
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12 mx-auto">
-      <Order product={product} siteId={site?.id || "1"} />
+      <Order product={product} siteId={site?.id ?? ''} />
     </div>
   );
 }

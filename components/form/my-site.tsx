@@ -10,22 +10,23 @@ import DomainStatus from "./domain-status";
 import DomainConfiguration from "./domain-configuration";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
-export default function MySite({initialData,handleSubmit}:{initialData:object,handleSubmit:any}){
+
+type SiteData = {
+  name: string | null;
+  subdomain: string | null;
+  description: string | null;
+};
+export default function MySite({initialData,handleSubmit}:{initialData:SiteData,handleSubmit:any}){
     
-  const [data, setData] = useState({
-    id: "",
+  const [data, setData] = useState<SiteData>({
     name: "",
-    image: "",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    userId: "",
+    subdomain: "",
     description: "",
-    imageBlurhash: "",
   });
     const router = useRouter();
     const { update } = useSession();
     useEffect(()=>{
-        // setData(initialData)
+        setData(initialData)
     },[])
     return (
         <form action={async (data:FormData)=>{
@@ -45,7 +46,7 @@ export default function MySite({initialData,handleSubmit}:{initialData:object,ha
             >
               Site Name
             </label>
-            {/* <h2 className="font-cal text-2xl dark:text-white">{initialData.name}</h2> */}
+            <h2 className="font-cal text-2xl dark:text-white">{initialData.name}</h2>
           </div>
 
           <div className="flex flex-col space-y-2">
@@ -55,7 +56,7 @@ export default function MySite({initialData,handleSubmit}:{initialData:object,ha
             >
               Subdomain
             </label>
-            {/* <h2 className="font-cal text-2xl dark:text-white">{initialData.subdomain}.{process.env.NEXT_PUBLIC_ROOT_DOMAIN}</h2> */}
+            <h2 className="font-cal text-2xl dark:text-white">{initialData.subdomain}.{process.env.NEXT_PUBLIC_ROOT_DOMAIN}</h2>
           </div>
 
           <div className="flex flex-col space-y-2">
@@ -68,7 +69,7 @@ export default function MySite({initialData,handleSubmit}:{initialData:object,ha
             <textarea
               name="description"
               placeholder="Description about why my site is so awesome"
-              value={data.description}
+              value={data.description ?? ""}
               onChange={(e) => setData({ ...data, description: e.target.value })}
               maxLength={140}
               rows={3}

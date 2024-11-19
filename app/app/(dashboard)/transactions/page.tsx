@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Transactions from "@/components/admin/transactions";
+import Transactions from "@/components/page/transactions/transactions";
 import PlaceholderCard from "@/components/placeholder-card";
 import CreateSiteButton from "@/components/create-site-button";
 import CreateSiteModal from "@/components/page/sites/create-site";
@@ -22,6 +22,7 @@ export default function AllSites({ params }: { params: { id: string } }) {
             </div>
           }
         >
+          
           <Transactions/>
         </Suspense>
       </div>

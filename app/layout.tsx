@@ -45,14 +45,7 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          
-
-          <main className="container mx-auto px-4 py-6">{children}</main>
-
-          <footer className="bg-blue-700 py-4 text-center text-sm text-white"> {/* Updated footer color */}
-            &copy; {new Date().getFullYear()} PPOB Panel. All Rights Reserved.
-          </footer>
-
+          {children}
           <Analytics />
         </Providers>
       </body>

@@ -1,10 +1,10 @@
 import BlurImage from "@/components/blur-image";
-import type { SelectSite } from "@/lib/schema";
+import type { TSite } from "@/lib/schema";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart } from "lucide-react";
 import Link from "next/link";
 
-export default function SiteCard({ data }: { data: SelectSite }) {
+export default function SiteCard({ data }: { data: TSite }) {
   const url = `${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
   return (
     <div className="relative flex flex-col rounded-lg border border-gray-200 bg-white shadow-md transition hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">

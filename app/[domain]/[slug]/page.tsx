@@ -105,9 +105,7 @@ export default async function SitePostPage({
         </div>
         <a
           // if you are using Github OAuth, you can get rid of the Twitter option
-          href={
-            data.site?.user?.username || ""
-          }
+          href={`https://twitter.com/${data.site?.user?.username}`}
           rel="noreferrer"
           target="_blank"
         >

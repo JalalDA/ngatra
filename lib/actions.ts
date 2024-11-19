@@ -14,15 +14,20 @@ import { revalidateTag } from "next/cache";
 import { withPostAuth, withSiteAuth } from "./auth";
 import db from "./db";
 import {
-  SelectPost,
-  SelectSite,
+  TPost,
+  TSite,
   posts,
   sites,
   users,
   category,
   product,
+  siteVendor,
+  sitePaymentMethod,
   transaction,
+  ETransactionStatus,
+  TTransaction,
 } from "./schema";
+import { tr } from "date-fns/locale";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -61,15 +66,9 @@ export const createSite = async (formData: FormData) => {
     );
     return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This subdomain is already taken`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
   }
 };
 
@@ -94,15 +93,9 @@ export const createCategory = async (formData: FormData) => {
     // );
     return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This category is already exists`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
   }
 };
 
@@ -111,8 +104,6 @@ export const updateCategory = async (
   _id: string,
   key: string,
 ) => {
-  console.log("_id is =" + _id);
-  console.log("key is =" + key);
   const session = await getSession();
   if (!session?.user.id) {
     return {
@@ -132,15 +123,9 @@ export const updateCategory = async (
 
     return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This ${key} is already in use`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
   }
 };
 
@@ -156,34 +141,28 @@ export const createProduct = async (formData: FormData) => {
   const code = nanoid();
   const vendor = formData.get("vendor") as string;
   const price = parseFloat(formData.get("price") as string);
-  const status = formData.get("status") as string;
+  const status = formData.get("status") ? true : false;
   try {
-    // const [response] = await db
-    //   .insert(product)
-    //   .values({
-    //     code,
-    //     categoryId,
-    //     productName,
-    //     price,
-    //     vendor,
-    //     status,
-    //   })
-    //   .returning();
+    const [response] = await db
+      .insert(product)
+      .values({
+        code,
+        categoryId,
+        productName,
+        price,
+        vendor,
+        status,
+      })
+      .returning();
 
     // revalidateTag(
     //   `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     // );
-    return "hehe";
+    return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This category is already exists`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
   }
 };
 
@@ -200,60 +179,17 @@ export const updateProduct = async (formData: FormData, _id: string) => {
     price: parseFloat(formData.get("price") as string),
     categoryId: formData.get("category") as string,
     vendor: formData.get("vendor") as string,
-    status: formData.get("status") as string,
+    status: formData.get("status") ? true : false,
   };
 
   try {
-    // const [response] = await db
-    //   .update(product)
-    //   .set(setData)
-    //   .where(eq(product.id, _id))
-    //   .returning();
+    const [response] = await db
+      .update(product)
+      .set(setData)
+      .where(eq(product.id, _id))
+      .returning();
 
-    // return response;
-  } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        // error: `This ${key} is already in use`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
-  }
-};
-
-export const createTransactions = async (
-  orderData: object,
-  id: string,
-  siteId: string,
-) => {
-  const productId = id;
-  // const name = orderData?.name as string;
-  // const phone = orderData?.phone as string;
-  // const params = orderData?.params as string;
-  // const qty = parseInt(orderData?.qty as string);
-  const status = "waiting_payment";
-  try {
-    // const [response] = await db
-    //   .insert(transaction)
-    //   .values({
-    //     siteId,
-    //     productId,
-    //     name,
-    //     phone,
-    //     params,
-    //     status,
-    //     qty,
-    //   })
-    //   .returning();
-
-    // revalidateTag(
-    //   `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
-    // );
-    // return transaction id
-    // return response;
+    return response;
   } catch (error: any) {
     return {
       error: error.message,
@@ -261,34 +197,104 @@ export const createTransactions = async (
   }
 };
 
-export const updateTransactionStatus = async (_id: string, status: string) => {
-  const setData = {
-    status,
-  };
-
+export const updateSitePaymentMethod = async (data: any, _id: string) => {
   try {
-    // const [response] = await db
-    //   .update(transaction)
-    //   .set(setData)
-    //   .where(eq(transaction.id, _id))
-    //   .returning();
-
-    // return response;
+    await db
+      .delete(sitePaymentMethod)
+      .where(eq(sitePaymentMethod.siteId, _id))
+      .returning();
+    data = data.sitePaymentMethod.map((item: string) => {
+      return { siteId: _id, masterPaymentMethodId: item };
+    });
+    let [response] = await db
+      .insert(sitePaymentMethod)
+      .values(data)
+      .returning();
+    return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        // error: `This ${key} is already in use`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateSiteVendor = async (data: any, _id: string) => {
+  try {
+    await db.delete(siteVendor).where(eq(siteVendor.siteId, _id)).returning();
+    data = data.siteVendor.map((item: string) => {
+      return { siteId: _id, masterVendorId: item };
+    });
+    let [response] = await db.insert(siteVendor).values(data).returning();
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const createTransactions = async (orderData: TTransaction) => {
+  const siteId = orderData.siteId as string;
+  const productId = orderData.productId as string;
+  const name = orderData?.name as string;
+  const phone = orderData?.phone as string;
+  const params = orderData?.params as string;
+  const qty = parseInt(orderData?.qty as unknown as string) as number;
+  const status =
+    (orderData?.status as
+      | "waiting_payment"
+      | "processed"
+      | "completed"
+      | "failed") ?? "waiting_payment";
+  try {
+    const [response] = await db
+      .insert(transaction)
+      .values({
+        siteId,
+        productId,
+        name,
+        phone,
+        params,
+        status,
+        qty,
+      })
+      .returning();
+
+    // revalidateTag(
+    //   `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+    // );
+    // return transaction id
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateTransactionStatus = async (
+  _id: string,
+  status: ETransactionStatus,
+) => {
+  try {
+    const [response] = await db
+      .update(transaction)
+      .set({
+        status: status,
+      })
+      .where(eq(transaction.id, _id))
+      .returning();
+
+    return { ...response, error: null };
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
   }
 };
 
 export const updateSite = withSiteAuth(
-  async (formData: FormData, site: SelectSite, key: string) => {
+  async (formData: FormData, site: TSite, key: string) => {
     const value = formData.get(key) as string;
 
     try {
@@ -403,39 +409,31 @@ export const updateSite = withSiteAuth(
 
       return response;
     } catch (error: any) {
-      if (error.code === "P2002") {
-        return {
-          error: `This ${key} is already taken`,
-        };
-      } else {
-        return {
-          error: error.message,
-        };
-      }
-    }
-  },
-);
-
-export const deleteSite = withSiteAuth(
-  async (_: FormData, site: SelectSite) => {
-    try {
-      const [response] = await db
-        .delete(sites)
-        .where(eq(sites.id, site.id))
-        .returning();
-
-      revalidateTag(
-        `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
-      );
-      response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
-      return response;
-    } catch (error: any) {
       return {
         error: error.message,
       };
     }
   },
 );
+
+export const deleteSite = withSiteAuth(async (_: FormData, site: TSite) => {
+  try {
+    const [response] = await db
+      .delete(sites)
+      .where(eq(sites.id, site.id))
+      .returning();
+
+    revalidateTag(
+      `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+    );
+    response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+});
 
 export const getSiteFromPostId = async (postId: string) => {
   const post = await db.query.posts.findFirst({
@@ -448,34 +446,32 @@ export const getSiteFromPostId = async (postId: string) => {
   return post?.siteId;
 };
 
-export const createPost = withSiteAuth(
-  async (_: FormData, site: SelectSite) => {
-    const session = await getSession();
-    if (!session?.user.id) {
-      return {
-        error: "Not authenticated",
-      };
-    }
+export const createPost = withSiteAuth(async (_: FormData, site: TSite) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
 
-    const [response] = await db
-      .insert(posts)
-      .values({
-        siteId: site.id,
-        userId: session.user.id,
-      })
-      .returning();
+  const [response] = await db
+    .insert(posts)
+    .values({
+      siteId: site.id,
+      userId: session.user.id,
+    })
+    .returning();
 
-    revalidateTag(
-      `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
-    );
-    site.customDomain && revalidateTag(`${site.customDomain}-posts`);
+  revalidateTag(
+    `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+  );
+  site.customDomain && revalidateTag(`${site.customDomain}-posts`);
 
-    return response;
-  },
-);
+  return response;
+});
 
 // creating a separate function for this because we're not using FormData
-export const updatePost = async (data: SelectPost) => {
+export const updatePost = async (data: TPost) => {
   const session = await getSession();
   if (!session?.user.id) {
     return {
@@ -530,8 +526,8 @@ export const updatePost = async (data: SelectPost) => {
 export const updatePostMetadata = withPostAuth(
   async (
     formData: FormData,
-    post: SelectPost & {
-      site: SelectSite;
+    post: TPost & {
+      site: TSite;
     },
     key: string,
   ) => {
@@ -582,37 +578,29 @@ export const updatePostMetadata = withPostAuth(
 
       return response;
     } catch (error: any) {
-      if (error.code === "P2002") {
-        return {
-          error: `This slug is already in use`,
-        };
-      } else {
-        return {
-          error: error.message,
-        };
-      }
-    }
-  },
-);
-
-export const deletePost = withPostAuth(
-  async (_: FormData, post: SelectPost) => {
-    try {
-      const [response] = await db
-        .delete(posts)
-        .where(eq(posts.id, post.id))
-        .returning({
-          siteId: posts.siteId,
-        });
-
-      return response;
-    } catch (error: any) {
       return {
         error: error.message,
       };
     }
   },
 );
+
+export const deletePost = withPostAuth(async (_: FormData, post: TPost) => {
+  try {
+    const [response] = await db
+      .delete(posts)
+      .where(eq(posts.id, post.id))
+      .returning({
+        siteId: posts.siteId,
+      });
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+});
 
 export const editUser = async (
   formData: FormData,
@@ -638,14 +626,8 @@ export const editUser = async (
 
     return response;
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This ${key} is already in use`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
+    return {
+      error: error.message,
+    };
   }
 };

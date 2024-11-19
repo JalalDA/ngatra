@@ -51,7 +51,12 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: `/login`,
     error: "/login", // Error code passed in query string as ?error=
   },
-  debug: true, // Enable debug mode,
+  debug: true, // Enable debug mode
+  // options: {
+  //   request: {
+  //     timeout: 10000, // Increase to 10 seconds
+  //   },
+  // },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
@@ -87,7 +92,7 @@ export const authOptions: NextAuthOptions = {
         // @ts-expect-error
         id: token.sub,
         // @ts-expect-error
-        username: token?.user?.username || token?.user?.gh_username,
+        username: token?.user?.username ,
       };
       return session;
     },

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { visit } from "unist-util-visit";
 import { ReactNode } from "react";
 import { DrizzleClient } from "./db";
-import { SelectExample } from "./schema";
+import { TExample } from "./schema";
 
 export function replaceLinks({
   href,
@@ -104,7 +104,7 @@ async function getExamples(node: any, drizzle: DrizzleClient) {
   const names = node?.attributes[0].value.split(",");
 
   // changed to | undefined (was null)
-  const data = new Array<SelectExample | undefined>();
+  const data = new Array<TExample | undefined>();
 
   for (let i = 0; i < names.length; i++) {
     const results = await drizzle.query.examples.findFirst({
