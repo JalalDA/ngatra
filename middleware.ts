@@ -62,6 +62,7 @@ export default async function middleware(req: NextRequest) {
     // rewrite root application to `/home` folder
     if (
       hostname === "localhost:3000" ||
+      hostname === "localhost.com" ||
       hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
       hostname === "namapena.my.id" ||
       hostname === "ngatrapanel.my.id" ||
