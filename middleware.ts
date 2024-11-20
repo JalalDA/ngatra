@@ -44,6 +44,15 @@ export default async function middleware(req: NextRequest) {
     "hostname",
     hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
   );
+
+  console.log("Hostname:", hostname);
+  console.log("Path:", path);
+
+  // Tangani subdomain dengan /order
+  if (path.startsWith("/order")) {
+    console.log("Rewriting /order for subdomain:", hostname);
+    return NextResponse.rewrite(new URL(`/order${path}`, req.url));
+  }
   if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
     const session = await getToken({ req });
     // if (!session && path !== "/login") {
