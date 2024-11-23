@@ -138,8 +138,7 @@ export default function FormOrder() {
     }, []);
 
     const onSubmit = (data: FormValues) => {
-        console.log(data);
-        alert(JSON.stringify(data, null, 2));
+        
     };
 
     const CustomOption = (props: any) => {

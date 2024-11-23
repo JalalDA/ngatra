@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import axios from "axios";
 import { formatToIDR } from "@/lib/formatter";
+import { Loader2Icon } from "lucide-react";
 
 type ServiceOption = {
     value: string;
@@ -56,7 +57,7 @@ export interface Service {
 }
 
 export default function FormOrder() {
-    const { register, handleSubmit, setValue, watch } = useForm<FormValues>({
+    const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormValues>({
         defaultValues: {
             service: null,
             link: "",
@@ -137,9 +138,28 @@ export default function FormOrder() {
         fetchServices();
     }, []);
 
-    const onSubmit = (data: FormValues) => {
-        console.log(data);
-        alert(JSON.stringify(data, null, 2));
+    const onSubmit = async (data: FormValues) => {
+        try {
+            const response = await axios.post(`https://ngatrapanel.my.id/api/payment`, {
+                transaction_details: {
+                    order_id: "order-12345",
+                    gross_amount: 50000
+                },
+                customer_details: {
+                    first_name: "John",
+                    last_name: "Doe",
+                    email: "johndoe@example.com",
+                    phone: "08123456789"
+                }
+            }
+            )
+            if(response.status === 200){
+                window.open(`${response.data?.response?.redirect_url}`)
+            }
+        } catch (error) {
+            console.log({error});
+            
+        }
     };
 
     const CustomOption = (props: any) => {
@@ -166,8 +186,6 @@ export default function FormOrder() {
         }
     };
 
-    console.log({selectedName});
-    
     return (
         <div className="min-h-screen flex items-start gap-x-10 justify-center bg-gray-100 p-4 text-black">
             <form
@@ -300,9 +318,11 @@ export default function FormOrder() {
                 {/* Submit */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-md"
+                    className="w-full bg-blue-600 text-white py-2 rounded-md flex items-center justify-center"
                 >
-                    Buat pesanan
+                    {
+                        isSubmitting ? <Loader2Icon className="h-6 w-6 animate-spin" /> : "Buat pesanan"
+                    }
                 </button>
             </form>
             {

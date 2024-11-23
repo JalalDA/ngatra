@@ -33,6 +33,7 @@
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.292.0",
+    "midtrans-client-typescript": "github:FerryAr/midtrans-client-typescript",
     "nanoid": "^4.0.2",
     "next": "14.0.2",
     "next-auth": "^4.24.10",

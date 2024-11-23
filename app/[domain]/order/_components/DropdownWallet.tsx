@@ -10,7 +10,7 @@ export default function DropdownWallet() {
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left z-50">
       {/* Trigger Button */}
       <button
         onClick={toggleDropdown}
