@@ -85,6 +85,8 @@ export default async function SitePostPage({
   const slug = decodeURIComponent(params.slug);
   const data = await getPostData(domain, slug);
 
+  console.log({data});
+
   if (!data) {
     notFound();
   }
