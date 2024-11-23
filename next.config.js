@@ -8,7 +8,7 @@
 module.exports = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["app.localhost:3000", "localhost:3000", "*", "testing.localhost:3000"],
+      allowedOrigins: ["app.localhost:3000", "localhost:3000", "*", "testing.localhost:3000", "testing.ngatrapanel.my.id", "*.ngatrapanel.my.id"],
       validateHeaders: false,
     },
   },

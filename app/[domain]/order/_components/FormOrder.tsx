@@ -140,7 +140,7 @@ export default function FormOrder() {
 
     const onSubmit = async (data: FormValues) => {
         try {
-            const response = await axios.post(`https://ngatrapanel.my.id/api/payment`, {
+            const response = await axios.post(`https://app.ngatrapanel.my.id/api/payment`, {
                 transaction_details: {
                     order_id: "order-12345",
                     gross_amount: 50000
