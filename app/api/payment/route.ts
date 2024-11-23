@@ -5,21 +5,19 @@ import { generateOrderId } from "@/lib/generate";
 
 export async function POST(req: NextRequest) {
     try {
-        // Ambil data dari body request
-        const body = await req.json();
-        const { orderId, grossAmount, customerDetails } = body;
-
         const serverKey = `${process.env.MIDTRANS_SANBOX_SERVER_KEY}`
         const clientKey = `${process.env.MIDTRANS_SANBOX_CLIENT_KEY}`
         const snap = new Midtrans.Snap({
             clientKey,
             serverKey,
-            isProduction : false
+            isProduction: false
         })
 
-        const parameters = {
+        const order_id = generateOrderId()
+
+        const response = await snap.createTransaction({
             transaction_details: {
-                order_id: generateOrderId(),
+                order_id,
                 gross_amount: 50000,
             },
             customer_details: {
@@ -31,9 +29,7 @@ export async function POST(req: NextRequest) {
             credit_card: {
                 secure: true,
             },
-        };
-
-       const response = await snap.createTransaction(parameters)
+        })
 
         // Response URL Snap
         return NextResponse.json({
