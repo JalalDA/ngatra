@@ -1,10 +1,12 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
 import { accounts, sessions, users, verificationTokens } from "./schema";
+import bcrypt from 'bcrypt'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
@@ -45,6 +47,47 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+          email: { label: "Email", type: "email", placeholder: "your@email.com" },
+          password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+          if (!credentials?.email || !credentials.password) {
+              throw new Error("Email and password are required.");
+          }
+          console.log({credentials});
+          
+          // Find the user by email
+          const user = await db.query.users.findFirst({
+            where : (user, { eq }) => eq(user.email, credentials.email),
+          })
+
+
+          if (!user) {
+              throw new Error("Invalid email or password.");
+          }
+
+          // Verify the password
+          const isPasswordValid = await bcrypt.compare(
+              credentials.password,
+              `${user.password}`
+          );
+
+          if (!isPasswordValid) {
+              throw new Error("Invalid email or password.");
+          }
+
+          // Return user object
+          return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              image: user.image
+          };
+      },
+  }),
   ],
   pages: {
     signIn: `/login`,
