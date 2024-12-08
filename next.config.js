@@ -24,6 +24,11 @@ module.exports = {
       { hostname: "www.google.com" },
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
+      {
+        protocol: "https",
+        hostname: "nbjoorgqw2emwdco.public.blob.vercel-storage.com", // Hostname gambar Anda
+        pathname: "/**", // Semua path pada hostname ini
+      },
     ],
   },
   async headers() {
