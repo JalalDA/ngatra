@@ -143,7 +143,7 @@ export default function Nav({ children }: { children: ReactNode }) {
             <div className="flex items-center space-x-3 mb-6">
               <Link href="/" className="flex items-center space-x-2">
                 <Image
-                  src="/logo.png"
+                  src="/ngatra-logo.svg"
                   alt="Logo"
                   width={36}
                   height={36}

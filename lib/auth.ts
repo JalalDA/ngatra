@@ -79,13 +79,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid email or password.");
         }
 
-        // Return user object
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image
-        };
+          // Return user object
+          return {
+              id: user.id,
+              role : user.role,
+              name: user.name,
+              email: user.email,
+              image: user.image
+          };
       },
     }),
   ],
