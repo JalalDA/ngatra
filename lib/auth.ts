@@ -50,34 +50,34 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-          email: { label: "Email", type: "email", placeholder: "your@email.com" },
-          password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "email", placeholder: "your@email.com" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-          if (!credentials?.email || !credentials.password) {
-              throw new Error("Email and password are required.");
-          }
-          console.log({credentials});
-          
-          // Find the user by email
-          const user = await db.query.users.findFirst({
-            where : (user, { eq }) => eq(user.email, credentials.email),
-          })
+        if (!credentials?.email || !credentials.password) {
+          throw new Error("Email and password are required.");
+        }
+        console.log({ credentials });
+
+        // Find the user by email
+        const user = await db.query.users.findFirst({
+          where: (user, { eq }) => eq(user.email, credentials.email),
+        })
 
 
-          if (!user) {
-              throw new Error("Invalid email or password.");
-          }
+        if (!user) {
+          throw new Error("Invalid email or password.");
+        }
 
-          // Verify the password
-          const isPasswordValid = await bcrypt.compare(
-              credentials.password,
-              `${user.password}`
-          );
+        // Verify the password
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          `${user.password}`
+        );
 
-          if (!isPasswordValid) {
-              throw new Error("Invalid email or password.");
-          }
+        if (!isPasswordValid) {
+          throw new Error("Invalid email or password.");
+        }
 
           // Return user object
           return {
@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
               image: user.image
           };
       },
-  }),
+    }),
   ],
   pages: {
     signIn: `/login`,
@@ -136,7 +136,7 @@ export const authOptions: NextAuthOptions = {
         // @ts-expect-error
         id: token.sub,
         // @ts-expect-error
-        username: token?.user?.username ,
+        username: token?.user?.username,
       };
       return session;
     },
