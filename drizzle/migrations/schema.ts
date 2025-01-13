@@ -2,7 +2,7 @@ import { pgTable, index, foreignKey, text, timestamp, real, uniqueIndex, boolean
 import { sql } from "drizzle-orm"
 
 export const transactionStatus = pgEnum("transaction_status", ['waiting_payment', 'processed', 'completed', 'failed'])
-export const userRole = pgEnum("user_role", ['admin', 'user', 'super_admin'])
+export const userRole = pgEnum("user_role", ['admin', 'user'])
 
 
 export const sessions = pgTable("sessions", {
@@ -34,18 +34,25 @@ export const sitePaymentMethod = pgTable("sitePaymentMethod", {
 	}
 });
 
+export const masterVendor = pgTable("masterVendor", {
+	id: text().primaryKey().notNull(),
+	vendorName: text(),
+});
+
 export const transaction = pgTable("transaction", {
 	id: text().primaryKey().notNull(),
 	siteId: text(),
 	productId: text(),
-	name: text(),
 	phone: text(),
-	qty: real(),
 	totalAmount: real(),
 	paymentMethod: text(),
 	params: text(),
 	status: transactionStatus().notNull(),
 	timestamp: timestamp({ mode: 'string' }).defaultNow().notNull(),
+	firstName: text("first_name"),
+	lastName: text("last_name"),
+	subAmount: real(),
+	quantity: real(),
 }, (table) => {
 	return {
 		transactionSiteIdSitesIdFk: foreignKey({
@@ -59,6 +66,12 @@ export const transaction = pgTable("transaction", {
 			name: "transaction_productId_product_id_fk"
 		}).onUpdate("cascade").onDelete("cascade"),
 	}
+});
+
+export const siteVendor = pgTable("siteVendor", {
+	id: text().primaryKey().notNull(),
+	masterVendorId: text(),
+	siteId: text(),
 });
 
 export const posts = pgTable("posts", {
@@ -92,9 +105,11 @@ export const posts = pgTable("posts", {
 	}
 });
 
-export const masterVendor = pgTable("masterVendor", {
+export const category = pgTable("category", {
 	id: text().primaryKey().notNull(),
-	vendorName: text(),
+	iconUrl: text().default('https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/hxfcV5V-eInX3jbVUhjAt1suB7zB88uGd1j20b.png'),
+	siteId: text(),
+	name: text(),
 });
 
 export const examples = pgTable("examples", {
@@ -107,12 +122,6 @@ export const examples = pgTable("examples", {
 	imageBlurhash: text(),
 });
 
-export const category = pgTable("category", {
-	id: text().primaryKey().notNull(),
-	categoryName: text("category_name"),
-	iconUrl: text().default('https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/hxfcV5V-eInX3jbVUhjAt1suB7zB88uGd1j20b.png'),
-});
-
 export const masterPaymentMethod = pgTable("masterPaymentMethod", {
 	id: text().primaryKey().notNull(),
 	name: text(),
@@ -122,32 +131,13 @@ export const users = pgTable("users", {
 	id: text().primaryKey().notNull(),
 	name: text(),
 	username: text(),
-	role: text().default('user'),
 	type: text().default('email'),
-	password: varchar({ length: 255 }).default('),
+	password: varchar({ length: 255 }).default(''),
 	email: text().notNull(),
 	emailVerified: timestamp({ mode: 'string' }),
 	image: text(),
 	createdAt: timestamp({ mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp({ mode: 'string' }).notNull(),
-});
-
-export const product = pgTable("product", {
-	id: text().primaryKey().notNull(),
-	code: text(),
-	categoryId: text(),
-	productName: text(),
-	price: real(),
-	vendor: text(),
-	status: boolean(),
-}, (table) => {
-	return {
-		productCategoryIdCategoryIdFk: foreignKey({
-			columns: [table.categoryId],
-			foreignColumns: [category.id],
-			name: "product_categoryId_category_id_fk"
-		}).onUpdate("cascade").onDelete("cascade"),
-	}
 });
 
 export const sites = pgTable("sites", {
@@ -179,21 +169,26 @@ export const sites = pgTable("sites", {
 	}
 });
 
-export const siteVendor = pgTable("siteVendor", {
+export const product = pgTable("product", {
 	id: text().primaryKey().notNull(),
-	masterVendorId: text(),
+	code: text(),
+	categoryId: text(),
+	price: real(),
 	siteId: text(),
+	masterProductId: text(),
+	formType: text(),
+	name: text(),
+	min: integer(),
+	max: integer(),
+	markupPct: real(),
+	sellPrice: real(),
+	active: boolean(),
 }, (table) => {
 	return {
-		siteVendorMasterVendorIdMasterVendorIdFk: foreignKey({
-			columns: [table.masterVendorId],
-			foreignColumns: [masterVendor.id],
-			name: "siteVendor_masterVendorId_masterVendor_id_fk"
-		}).onUpdate("cascade").onDelete("cascade"),
-		siteVendorSiteIdSitesIdFk: foreignKey({
-			columns: [table.siteId],
-			foreignColumns: [sites.id],
-			name: "siteVendor_siteId_sites_id_fk"
+		productCategoryIdCategoryIdFk: foreignKey({
+			columns: [table.categoryId],
+			foreignColumns: [category.id],
+			name: "product_categoryId_category_id_fk"
 		}).onUpdate("cascade").onDelete("cascade"),
 	}
 });

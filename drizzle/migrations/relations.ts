@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { users, sessions, sites, sitePaymentMethod, transaction, product, posts, category, masterVendor, siteVendor, accounts } from "./schema";
+import { users, sessions, sites, sitePaymentMethod, transaction, product, posts, category, accounts } from "./schema";
 
 export const sessionsRelations = relations(sessions, ({one}) => ({
 	user: one(users, {
@@ -30,7 +30,6 @@ export const sitesRelations = relations(sites, ({one, many}) => ({
 		fields: [sites.userId],
 		references: [users.id]
 	}),
-	siteVendors: many(siteVendor),
 }));
 
 export const transactionRelations = relations(transaction, ({one}) => ({
@@ -65,21 +64,6 @@ export const postsRelations = relations(posts, ({one}) => ({
 
 export const categoryRelations = relations(category, ({many}) => ({
 	products: many(product),
-}));
-
-export const siteVendorRelations = relations(siteVendor, ({one}) => ({
-	masterVendor: one(masterVendor, {
-		fields: [siteVendor.masterVendorId],
-		references: [masterVendor.id]
-	}),
-	site: one(sites, {
-		fields: [siteVendor.siteId],
-		references: [sites.id]
-	}),
-}));
-
-export const masterVendorRelations = relations(masterVendor, ({many}) => ({
-	siteVendors: many(siteVendor),
 }));
 
 export const accountsRelations = relations(accounts, ({one}) => ({
