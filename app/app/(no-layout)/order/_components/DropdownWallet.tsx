@@ -1,5 +1,5 @@
 "use client"
-import { PlusCircle, SwitchCamera, Wallet2Icon } from "lucide-react";
+import { ArrowDown, ChevronDown, PlusCircle, SwitchCamera, Wallet2Icon } from "lucide-react";
 import React, { useState } from "react";
 
 export default function DropdownWallet() {
@@ -14,11 +14,11 @@ export default function DropdownWallet() {
       {/* Trigger Button */}
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full text-green-600 font-semibold hover:bg-green-200"
+        className="flex items-center space-x-2 px-4 py-2 rounded-full text-green-600 font-semibold hover:bg-green-200"
       >
         <Wallet2Icon/>
-        <span>Rp 42 000</span>
-        <span className="text-sm">▼</span>
+        <span className="font-bold">IDR 0</span>
+        <ChevronDown/>
       </button>
 
       {/* Dropdown Menu */}

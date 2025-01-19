@@ -11,19 +11,22 @@ import { redirect } from "next/navigation";
 
 export default async function Overview() {
   const session = await getSession();
-  if(session){
+  if (session) {
     const data = await db.query.sites.findFirst({
       where: (sites, { eq }) => eq(sites.userId, session.user.id),
+      orderBy: (sites, { asc }) => asc(sites.createdAt),
     });
     if (!data) {
       redirect("/onboarding");
+    }else{
+      redirect(`/site/${data.id}`)
     }
   }
-  
+
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
       <div className="flex flex-col space-y-6">
-        <h1 className="font-cal text-3xl font-bold dark:text-white">
+        <h1 className="font-cal text-black text-3xl font-bold dark:text-white">
           Overview
         </h1>
         <OverviewStats />

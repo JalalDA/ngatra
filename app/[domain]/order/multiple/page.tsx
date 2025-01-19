@@ -15,7 +15,6 @@ const Order = async ({
         getSiteData(domain),
     ]);
 
-    console.log({ data });
     return (
         <div className='h-screen w-screen'>
             <Header name={data?.name || ""}/>

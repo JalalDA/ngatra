@@ -22,6 +22,7 @@ import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigati
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
+import NavItem from "./nav-item";
 
 const externalLinks = [
   {
@@ -44,22 +45,22 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
-          name : "Provider",
-          href : `/site/${id}/provider`,
-          isActive : segments.includes("provider"),
-          icon : <FolderClosed width={18} className="text-purple-500 shadow-md"/>
+          name: "Provider",
+          href: `/site/${id}/provider`,
+          isActive: segments.includes("provider"),
+          icon: <FolderClosed width={18} className="text-purple-500 shadow-md" />
         },
         {
-          name : "Payment Method",
-          href : `/site/${id}/payment`,
-          isActive : segments.includes("payment"),
-          icon : <BadgeDollarSignIcon width={18} className="text-green-500 shadow-md"/>
+          name: "Payment Method",
+          href: `/site/${id}/payment`,
+          isActive: segments.includes("payment"),
+          icon: <BadgeDollarSignIcon width={18} className="text-green-500 shadow-md" />
         },
         {
           name: "Analytics",
           href: `/site/${id}/analytics`,
           isActive: segments.includes("analytics"),
-          icon: <BarChart3 width={18}/>,
+          icon: <BarChart3 width={18} />,
         },
         {
           name: "Site Settings",
@@ -137,43 +138,71 @@ export default function Nav({ children }: { children: ReactNode }) {
     setShowSidebar(false); // Hide sidebar on path change
   }, [pathname]);
 
+  const topNav = [
+    {
+      name : "Users",
+      url : "/users",
+    },
+    {
+      name : "Orders",
+      url : "/orders",
+    },
+    {
+      name : "Services",
+      url : "/services",
+    },
+    {
+      name : "Support",
+      url : "/support",
+    },
+    {
+      name : "Statistics",
+      url : "/statistics",
+    },
+    {
+      name : "Top Providers",
+      url : "/top-providers",
+    },
+    {
+      name : "More",
+      url : "/more",
+    },
+  ]
+
   return (
     <>
-      {/* Toggle Sidebar Button */}
-      <button
-        className="fixed z-20 top-5 right-5 sm:hidden p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
-        onClick={() => setShowSidebar(!showSidebar)}
-      >
-        <LayoutDashboard width={20} />
-      </button>
+      <div className="sticky top-0 flex bg-gray-900 z-50 items-center px-8 py-4 gap-x-8">
+        <Select
+          placeholder={"select your sites"}
+          options={[
+            {
+              label: "keren",
+              value: "https://keren.com"
+            },
+            {
+              label: "galau",
+              value: "Galau.com"
+            }
+          ]} />
+          {
+            topNav.map((item, index)=>(
+              // <Link key={index} className="hover:bg-gray-600 rounded-lg p-2 cursor-pointer" href={item.url}>{item.name}</Link>
+              <NavItem key={index} item={item}/>
+            ))
+          }
+        <div className="flex items-center gap-x-2">
+          
+        </div>
+      </div>
 
       {/* Sidebar */}
-      <div
+      {/* <div
         className={`fixed z-10 h-full transform transition-transform sm:w-60 ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } sm:translate-x-0 bg-gray-900 text-gray-300 border-r border-gray-700`}
       >
-        {/* Logo and Navigation Links */}
         <div className="flex flex-col justify-between h-full p-4">
           <div>
-            {/* Logo */}
-            <div className="flex items-center space-x-3 mb-6">
-              <Link href="/" className="flex items-center space-x-2">
-                <Image
-                  src="/ngatra-logo.svg"
-                  alt="Logo"
-                  width={36}
-                  height={36}
-                  className="rounded"
-                />
-                {/* <Select
-                  onChange={e => {
-                    console.log({ e });
 
-                  }} options={[1, 2, 3, 4]} /> */}
-              </Link>
-            </div>
-
-            {/* Navigation Links */}
             <div className="space-y-1">
               {tabs.map(({ name, href, isActive, icon }) => (
                 <Link
@@ -191,7 +220,6 @@ export default function Nav({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          {/* External Links */}
           <div className="space-y-1">
             {externalLinks.map(({ name, href, icon }) => (
               <a
@@ -212,7 +240,7 @@ export default function Nav({ children }: { children: ReactNode }) {
             {children}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
