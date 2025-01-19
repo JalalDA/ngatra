@@ -28,6 +28,14 @@ import {
   TTransaction,
 } from "./schema";
 import { tr } from "date-fns/locale";
+import bcrypt from 'bcrypt'
+import { signIn } from "next-auth/react";
+
+export type AuthFormInputs = {
+  email: string;
+  password: string;
+  username? : string;
+}
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -513,7 +521,7 @@ export const updatePost = async (data: TPost) => {
     // if the site has a custom domain, we need to revalidate those tags too
     post.site?.customDomain &&
       (revalidateTag(`${post.site?.customDomain}-posts`),
-      revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+        revalidateTag(`${post.site?.customDomain}-${post.slug}`));
 
     return response;
   } catch (error: any) {
@@ -574,7 +582,7 @@ export const updatePostMetadata = withPostAuth(
       // if the site has a custom domain, we need to revalidate those tags too
       post.site?.customDomain &&
         (revalidateTag(`${post.site?.customDomain}-posts`),
-        revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+          revalidateTag(`${post.site?.customDomain}-${post.slug}`));
 
       return response;
     } catch (error: any) {
@@ -631,3 +639,75 @@ export const editUser = async (
     };
   }
 };
+
+
+export const registerCredentials = async (data: AuthFormInputs) => {
+  try {
+    const user = await db.query.users.findFirst({
+      where: (user, { eq }) => eq(user.email, data.email),
+    })
+
+    if (user) {
+      return {
+        status: false,
+        message: "User has been registered",
+      };
+    }
+
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(data.password, salt)
+
+    await db
+      .insert(users)
+      .values({
+        email: data.email,
+        username: data?.username,
+        password: hashedPassword, // Pastikan variabel password di-hash
+        name: data?.username,
+        updatedAt: new Date(),
+      });
+    return {
+      status: true,
+      message: "Register success"
+    }
+  } catch (error) {
+    console.log({ error });
+    return {
+      status: false,
+      message: "Register failed"
+    }
+  }
+}
+
+
+export const signInCredentials = async (data: AuthFormInputs) => {
+  try {
+    const user = await db.query.users.findFirst({
+      where: (user, { eq }) => eq(user.email, data.email),
+    })
+    console.log({user});
+    
+    if (!user) {
+      return {
+        status: false,
+        message: "user not found"
+      }
+    }
+
+    const result = await signIn("credentials", {
+      email: data?.email,
+      password: data?.password
+    })
+    console.log({ result });
+    return {
+      status: true,
+      message: "Register success"
+    }
+  } catch (error) {
+    console.log({ error });
+    return {
+      status: false,
+      message: "Register failed"
+    }
+  }
+}
