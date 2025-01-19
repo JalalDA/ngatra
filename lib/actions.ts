@@ -698,7 +698,6 @@ export const signInCredentials = async (data: AuthFormInputs) => {
       email: data?.email,
       password: data?.password
     })
-    console.log({ result });
     return {
       status: true,
       message: "Register success"
