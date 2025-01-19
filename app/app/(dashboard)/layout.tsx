@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           <Profile />
         </Suspense>
         </Nav>
-        <div className="min-h-screen sm:pl-60 dark:bg-black">{children}</div>
+        <div className="min-h-screen sm:pl-60 bg-white dark:bg-black">{children}</div>
     </div>
   );
 }

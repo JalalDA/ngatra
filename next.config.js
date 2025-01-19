@@ -24,6 +24,7 @@ module.exports = {
       { hostname: "www.google.com" },
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
+      { hostname : "tpqofhmdrf3vjcdc.public.blob.vercel-storage.com"}
     ],
   },
   async headers() {

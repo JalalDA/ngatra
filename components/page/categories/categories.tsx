@@ -14,6 +14,8 @@ export default async function Categories({ limit }: { limit?: number }) {
     ...(limit ? { limit } : {}),
   });
 
+  console.log({categories});
+
   return categories.length > 0 ? (
     <div className="space-y-4">
       {categories.map((category) => (

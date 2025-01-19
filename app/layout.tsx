@@ -5,10 +5,10 @@ import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
-const title = "PPOB Panel – Your All-in-One Payment Solution";
+const title = "Ngatra Panel – Your SMM Solutions";
 const description =
-  "PPOB Panel offers seamless multi-tenant management for payment and service transactions. Built with the latest technology for reliability and scalability.";
-const image = "https://yourdomain.com/assets/ppob-panel-thumbnail.png";
+  "Ngatra Panel offers seamless multi-tenant management for payment and service transactions. Built with the latest technology for reliability and scalability.";
+const image = "https://app.ngatrapanel.my.id/ngatra-logo.svg";
 
 export const metadata: Metadata = {
   title,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     images: [image],
     creator: "@yourhandle",
   },
-  metadataBase: new URL("https://yourdomain.com"),
+  metadataBase: new URL("https://app.ngatrapanel.my.id/ngatra-logo.svg"),
 };
 
 export default function RootLayout({

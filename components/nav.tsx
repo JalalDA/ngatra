@@ -14,15 +14,19 @@ import {
   Globe,
   CreditCard,
   UserCircle2,
+  FilesIcon,
+  FolderClosed,
+  BadgeDollarSignIcon,
 } from "lucide-react";
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import Select from "react-select";
 
 const externalLinks = [
   {
     name: "Contact Support",
-    href: "https://wa.me/6281266235940",
+    href: "https://wa.me/6281315805251",
     icon: <PhoneCall width={18} />,
   },
 ];
@@ -40,10 +44,22 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
+          name : "Provider",
+          href : `/site/${id}/provider`,
+          isActive : segments.includes("provider"),
+          icon : <FolderClosed width={18} className="text-purple-500 shadow-md"/>
+        },
+        {
+          name : "Payment Method",
+          href : `/site/${id}/payment`,
+          isActive : segments.includes("payment"),
+          icon : <BadgeDollarSignIcon width={18} className="text-green-500 shadow-md"/>
+        },
+        {
           name: "Analytics",
           href: `/site/${id}/analytics`,
           isActive: segments.includes("analytics"),
-          icon: <BarChart3 width={18} />,
+          icon: <BarChart3 width={18}/>,
         },
         {
           name: "Site Settings",
@@ -149,9 +165,11 @@ export default function Nav({ children }: { children: ReactNode }) {
                   height={36}
                   className="rounded"
                 />
-                <span className="text-lg font-bold text-white">
-                  Admin Panel
-                </span>
+                {/* <Select
+                  onChange={e => {
+                    console.log({ e });
+
+                  }} options={[1, 2, 3, 4]} /> */}
               </Link>
             </div>
 
