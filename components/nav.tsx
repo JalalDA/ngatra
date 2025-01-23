@@ -10,19 +10,14 @@ import {
   BoxIcon,
   DollarSign,
   PhoneCall,
-  Newspaper,
   Globe,
   CreditCard,
   UserCircle2,
-  FilesIcon,
   FolderClosed,
   BadgeDollarSignIcon,
 } from "lucide-react";
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import Select from "react-select";
-import NavItem from "./nav-item";
 
 const externalLinks = [
   {
@@ -138,65 +133,10 @@ export default function Nav({ children }: { children: ReactNode }) {
     setShowSidebar(false); // Hide sidebar on path change
   }, [pathname]);
 
-  const topNav = [
-    {
-      name : "Users",
-      url : "/users",
-    },
-    {
-      name : "Orders",
-      url : "/orders",
-    },
-    {
-      name : "Services",
-      url : "/services",
-    },
-    {
-      name : "Support",
-      url : "/support",
-    },
-    {
-      name : "Statistics",
-      url : "/statistics",
-    },
-    {
-      name : "Top Providers",
-      url : "/top-providers",
-    },
-    {
-      name : "More",
-      url : "/more",
-    },
-  ]
-
   return (
     <>
-      <div className="sticky top-0 flex bg-gray-900 z-50 items-center px-8 py-4 gap-x-8">
-        <Select
-          placeholder={"select your sites"}
-          options={[
-            {
-              label: "keren",
-              value: "https://keren.com"
-            },
-            {
-              label: "galau",
-              value: "Galau.com"
-            }
-          ]} />
-          {
-            topNav.map((item, index)=>(
-              // <Link key={index} className="hover:bg-gray-600 rounded-lg p-2 cursor-pointer" href={item.url}>{item.name}</Link>
-              <NavItem key={index} item={item}/>
-            ))
-          }
-        <div className="flex items-center gap-x-2">
-          
-        </div>
-      </div>
-
       {/* Sidebar */}
-      {/* <div
+      <div
         className={`fixed z-10 h-full transform transition-transform sm:w-60 ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } sm:translate-x-0 bg-gray-900 text-gray-300 border-r border-gray-700`}
       >
@@ -240,7 +180,7 @@ export default function Nav({ children }: { children: ReactNode }) {
             {children}
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

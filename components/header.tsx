@@ -6,8 +6,9 @@ import SelectSite from './select/select-site';
 import NavItem from './nav-item';
 import { PanelLeftClose } from 'lucide-react';
 import DropdownWallet from '@/app/app/(no-layout)/order/_components/DropdownWallet';
+import Link from 'next/link';
 
-const Header = async ({ limit, id }: { limit?: number, id : string}) => {
+const Header = async ({ limit, id }: { limit?: number, id: string }) => {
     const session = await getSession();
     if (!session) {
         redirect("/login");
@@ -17,7 +18,7 @@ const Header = async ({ limit, id }: { limit?: number, id : string}) => {
         orderBy: (sites, { asc }) => asc(sites.createdAt),
         ...(limit ? { limit } : {}),
     });
-    
+
     const topNav = [
         {
             name: "Users",
@@ -29,19 +30,19 @@ const Header = async ({ limit, id }: { limit?: number, id : string}) => {
         },
         {
             name: "Services",
-            url: "/services",
+            url: `/site/${id}/services`,
         },
         {
             name: "Support",
-            url: "/support",
+            url: `/site/${id}/support`,
         },
         {
             name: "Statistics",
-            url: "/statistics",
+            url: `/site/${id}/statistics`,
         },
         {
             name: "Top Providers",
-            url: "/top-providers",
+            url: `/site/${id}/top-providers`,
         },
         {
             name: "More",
@@ -50,17 +51,19 @@ const Header = async ({ limit, id }: { limit?: number, id : string}) => {
     ]
     return (
         <div className="sticky top-0 flex dark:text-white text-gray-900 bg-white dark:bg-gray-900 z-50 items-center px-8 py-4 gap-x-8">
-            <SelectSite sites={sites}/>
+            <SelectSite sites={sites} />
             {
                 topNav.map((item, index) => (
                     <NavItem key={index} item={item} />
                 ))
             }
-            <DropdownWallet/>
-            <button className="rounded-md border border-gray-300 p-2 flex items-center gap-x-2">
-                <PanelLeftClose/>
-                <span className='font-bold'>Control</span>
-            </button>
+            <DropdownWallet />
+            <Link href={`/site/${id}/control`}>
+                <button className="rounded-md border border-gray-300 p-2 flex items-center gap-x-2">
+                    <PanelLeftClose />
+                    <span className='font-bold'>Control</span>
+                </button>
+            </Link>
         </div>
     )
 }
