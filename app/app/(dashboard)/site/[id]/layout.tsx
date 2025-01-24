@@ -6,7 +6,10 @@ export default function SiteLayout({ children, params }: { children: ReactNode, 
   return (
     <div className="flex w-screen flex-col">
       <Header id={params.id} />
-      <div className="flex flex-col space-y-6 p-6">{children}</div>
+      <div className="flex flex-col space-y-6 p-6">
+        {params.id}
+        {children}
+      </div>
     </div>
   );
 }

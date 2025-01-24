@@ -95,11 +95,6 @@ export default function Nav({ children }: { children: ReactNode }) {
         href: "/sites",
         icon: <Globe width={18} />,
       },
-      // {
-      //   name: "My Sites",
-      //   href: "/mySite",
-      //   icon: <Globe  width={18} />,
-      // },
       {
         name: "Product Categories",
         href: "/categories",
@@ -127,6 +122,8 @@ export default function Nav({ children }: { children: ReactNode }) {
     ];
   }, [segments]);
 
+  console.log({segments});
+
   const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
@@ -136,10 +133,7 @@ export default function Nav({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Sidebar */}
-      <div
-        className={`fixed z-10 h-full transform transition-transform sm:w-60 ${showSidebar ? "translate-x-0" : "-translate-x-full"
-          } sm:translate-x-0 bg-gray-900 text-gray-300 border-r border-gray-700`}
-      >
+      <div>
         <div className="flex flex-col justify-between h-full p-4">
           <div>
 

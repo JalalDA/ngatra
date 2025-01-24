@@ -4,7 +4,7 @@ type Props = {}
 
 const ControlPanel = (props: Props) => {
   return (
-    <div>ControlPanel</div>
+    <div className='text-black'>ControlPanel</div>
   )
 }
 
