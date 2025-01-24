@@ -4,6 +4,8 @@ import { ChevronDown, PlusCircleIcon } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import CreateSiteButton from '../create-site-button'
+import CreateSiteModal from '../page/sites/create-site'
 
 type Props = {
     sites: TSite[],
@@ -11,7 +13,7 @@ type Props = {
 
 const SelectSite = ({ sites }: Props) => {
     const pathname = usePathname()
-    console.log({pathname});
+    console.log({ pathname });
     const siteOptions = sites.map((item, index) => ({
         label: item.name,
         value: item
@@ -24,7 +26,7 @@ const SelectSite = ({ sites }: Props) => {
         setIsOpen(!isOpen);
     };
     const router = useRouter()
-    
+
     return (
         <div className="w-1/5 text-gray-900 dark:text-white">
             <div className="relative inline-block text-left">
@@ -42,7 +44,7 @@ const SelectSite = ({ sites }: Props) => {
 
                 {/* Dropdown Menu */}
                 <div
-                    className={`absolute right-0 mt-2 bg-white w-72 border border-gray-200 rounded-md shadow-lg transition-all duration-300 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                    className={`absolute right-0 mt-2 bg-white w-72 border border-gray-200 rounded-md shadow-lg transition-all duration-300 -z-10 overflow-hidden ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                         }`}
                 >
                     <ul className="py-2">
@@ -60,13 +62,10 @@ const SelectSite = ({ sites }: Props) => {
                         }
                         <li className="flex items-center px-4 py-2 text-black hover:bg-gray-100 cursor-pointer">
                             <PlusCircleIcon className="mr-2 text-gray-900 h-10 w-10" />
-                            <span className='font-semibold'>Buat Panel</span>
+                            <CreateSiteButton>
+                                <CreateSiteModal />
+                            </CreateSiteButton>
                         </li>
-                        {/*
-                        <li className="flex items-center px-4 py-2 text-black hover:bg-gray-100 cursor-pointer">
-                            <SwitchCamera className="mr-2 text-gray-500" />
-                            <span>Ubah mata uang</span>
-                        </li> */}
                     </ul>
                 </div>
             </div>

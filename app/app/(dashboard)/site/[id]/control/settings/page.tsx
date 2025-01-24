@@ -1,3 +1,9 @@
+import FastOrderModal from '@/components/control/modal/fast-order-modal'
+import ServiceSettingModal from '@/components/control/modal/service-settings-modal'
+import SettingsItem from '@/components/control/settings/settings-item'
+import { Switch } from '@/components/ui/switch'
+import { BanknoteIcon, BookUserIcon, CheckCircle2Icon, ChevronRightIcon, CoinsIcon, Globe2Icon, InspectIcon, Layers2, ShoppingCartIcon } from 'lucide-react'
+import Image from 'next/image'
 import React from 'react'
 
 type Props = {}
@@ -5,35 +11,85 @@ type Props = {}
 const Settings = (props: Props) => {
     return (
         <div className='flex flex-col gap-y-4 md:w-full'>
-            <div className="text-md font-semibold">General Settings</div>
+            <div className="text-md font-semibold text-xl">General Settings</div>
 
             {/* banner */}
-            <div className="bg-gray-50 p-4 rounded-lg border shadow-sm flex justify-between items-center w-full">
-                <div>
+            <div className=" rounded-lg border shadow-sm flex justify-between items-center w-full">
+                <div className='flex flex-col gap-y-4 p-4 border-r md:w-1/2'>
                     <h4 className="font-semibold text-lg">Activate banner & get benefits</h4>
-                    <p className="text-green-600 text-sm">✓ Listing in top providers</p>
-                    <p className="text-green-600 text-sm">✓ You are helping Socpanel to improve</p>
+                    <p className="text-md flex items-center gap-x-4 font-semibold"><CheckCircle2Icon className='text-green-700' /> Listing in top providers</p>
+                    <p className="text-md flex items-center gap-x-4 font-semibold"><CheckCircle2Icon className='text-green-700' />  You are helping Ngatra to improve</p>
                 </div>
-                <button className="bg-gray-100 border px-3 py-1 text-sm rounded-md hover:bg-gray-200">
-                    Turn off banner
+                <button className="px-3 py-1 text-sm rounded-md flex items-center flex-col gap-y-2 justify-center w-1/2">
+                    <div className="p-4 shadow-sm font-semibold border rounded-md flex items-center gap-x-2">
+                        <Image src={"/ngatra-logo.svg"} alt='ngatra -loho' height={32} width={32} />
+                        Made by Ngatra
+                    </div>
+                    <div className="p-4 shadow-sm hover:shadow-lg hover:bg-gray-100 font-semibold border rounded-md">
+                        Turn off banner
+                    </div>
                 </button>
             </div>
 
-            <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h5 className="font-semibold">Services settings</h5>
+            {/* orders and services */}
+            <div className="rounded-lg border shadow-sm flex items-start flex-col gap-y-2 w-full">
+                <div className="p-4 border-b flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <SettingsItem rightIcon={<Layers2/>} title='Service settings' >
+                        <ServiceSettingModal/>
+                    </SettingsItem>
+                </div>
+                <div className="p-4 flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <SettingsItem rightIcon={<ShoppingCartIcon/>} title='Fast order' >
+                        <FastOrderModal/>
+                    </SettingsItem>
+                </div>
             </div>
 
-            <div className="bg-white p-4 rounded-lg shadow-sm flex justify-between items-center">
-                <h5 className="font-semibold">Fast order</h5>
-                <span className="text-green-600 text-sm font-medium">Active</span>
+            {/* currency */}
+            <div className="rounded-lg border shadow-sm flex items-start flex-col gap-y-2 w-full">
+                <div className="p-4 flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <div className="flex items-center gap-x-2">
+                        <BanknoteIcon/>
+                        <h5 className="font-semibold">Currency</h5>
+                    </div>
+                    <ChevronRightIcon />
+                </div>
             </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h5 className="font-semibold">Custom Registration Fields</h5>
-                <p className="text-sm text-gray-500">Added fields: 0</p>
+
+            {/* metadata */}
+            <div className="rounded-lg border shadow-sm flex items-start flex-col gap-y-2 w-full">
+                <div className="p-4 border-b flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <div className="flex items-center gap-x-2">
+                        <InspectIcon />
+                        <h5 className="font-semibold">Meta Data</h5>
+                    </div>
+                    <ChevronRightIcon />
+                </div>
+                <div className="p-4 flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <div className="flex items-center gap-x-2">
+                        <Globe2Icon />
+                        <h5 className="font-semibold">Domain Settings</h5>
+                    </div>
+                    <ChevronRightIcon />
+                </div>
             </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm flex justify-between items-center">
-                <h5 className="font-semibold">Currency</h5>
-                <p className="text-sm text-gray-500">Primary currency: <span className="font-medium">IDR</span></p>
+
+            {/* other */}
+            <div className="rounded-lg border shadow-sm flex items-start flex-col gap-y-2 w-full">
+                <div className="p-4 border-b flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <div className="flex items-center gap-x-2">
+                        <CoinsIcon />
+                        <h5 className="font-semibold">Show total panel orders</h5>
+                    </div>
+                    <Switch />
+                </div>
+                <div className="p-4 flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
+                    <div className="flex items-center gap-x-2">
+                        <BookUserIcon/>
+                        <h5 className="font-semibold">Show user spent</h5>
+                    </div>
+                    <Switch />
+                </div>
             </div>
         </div>
     )

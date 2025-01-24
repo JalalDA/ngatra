@@ -51,10 +51,10 @@ export default function CreateSiteModal() {
       {/* Form Header */}
       <div className="flex flex-col space-y-4 p-6 md:p-8">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-          Create a New Site
+          Buat Panel Baru
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Enter details about your site to create a new project.
+          Masukan detail untuk panel baru kamu
         </p>
 
         {/* Site Name */}
@@ -63,7 +63,7 @@ export default function CreateSiteModal() {
             htmlFor="name"
             className="text-sm font-medium text-gray-600 dark:text-gray-400"
           >
-            Site Name
+            Nama panel
           </label>
           <input
             name="name"

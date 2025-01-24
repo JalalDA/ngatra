@@ -93,44 +93,44 @@ export default function Sidebar() {
         return [
             {
                 name: "General Settings",
-                href: "control/settings",
-                isActive: segments.length === 0,
+                href: `/site/${id}/control/settings`,
+                isActive: segments[0] === "settings",
                 icon: <Settings width={18} />,
             },
             {
                 name: "Providers",
-                href: "providers",
+                href: `/site/${id}/control/providers`,
                 isActive: segments[0] === "providers",
                 icon: <FolderClosed width={18} />,
             },
             {
                 name: "Payment Methods",
-                href: "payments",
+                href: `/site/${id}/control/payments`,
                 isActive: segments[0] === "payments",
                 icon: <Wallet width={18} />,
             },
             {
                 name: "Design",
-                href: "design",
+                href: `/site/${id}/control/design`,
                 isActive: segments[0] === "design",
                 icon: <Sparkles width={18} />
             },
 
             {
                 name: "Managers",
-                href: "managers",
+                href: `/site/${id}/control/managers`,
                 isActive: segments[0] === "managers",
                 icon: <Users width={18} />,
             },
             {
                 name: "Language",
-                href: `language`,
+                href: `/site/${id}/control/language`,
                 isActive: segments[0] === "language",
                 icon: <DollarSign width={18} />,
             },
             {
                 name: "Integrations",
-                href: "integrations",
+                href: `/site/${id}/control/integrations`,
                 isActive: segments[0] === "integrations",
                 icon: <Layers width={18} />,
             }

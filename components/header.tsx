@@ -58,7 +58,7 @@ const Header = async ({ limit, id }: { limit?: number, id: string }) => {
                 ))
             }
             <DropdownWallet />
-            <Link href={`/site/${id}/control`}>
+            <Link href={`/site/${id}/control/settings`}>
                 <button className="rounded-md border border-gray-300 p-2 flex items-center gap-x-2">
                     <PanelLeftClose />
                     <span className='font-bold'>Control</span>
