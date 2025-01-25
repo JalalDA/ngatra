@@ -4,6 +4,7 @@ import Nav from "@/components/nav";
 import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
+import Header from "@/components/header";
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const session = await getSession();
   if (!session?.user) {
@@ -11,12 +12,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   }
   return (
     <div>
-        <Nav>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Profile />
-        </Suspense>
-        </Nav>
-        <div className="min-h-screen sm:pl-60 bg-white dark:bg-black">{children}</div>
+        <div className="min-h-screen bg-white dark:bg-gray-950">{children}</div>
     </div>
   );
 }

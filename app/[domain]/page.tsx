@@ -41,7 +41,6 @@ export default async function SiteHomePage({
     getPostsForSite(domain),
   ]);
 
-  redirect("/order")
   if (!data) {
     notFound();
   }

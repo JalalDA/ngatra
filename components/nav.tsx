@@ -10,18 +10,14 @@ import {
   BoxIcon,
   DollarSign,
   PhoneCall,
-  Newspaper,
   Globe,
   CreditCard,
   UserCircle2,
-  FilesIcon,
   FolderClosed,
   BadgeDollarSignIcon,
 } from "lucide-react";
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import Select from "react-select";
 
 const externalLinks = [
   {
@@ -44,22 +40,22 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
-          name : "Provider",
-          href : `/site/${id}/provider`,
-          isActive : segments.includes("provider"),
-          icon : <FolderClosed width={18} className="text-purple-500 shadow-md"/>
+          name: "Provider",
+          href: `/site/${id}/provider`,
+          isActive: segments.includes("provider"),
+          icon: <FolderClosed width={18} className="text-purple-500 shadow-md" />
         },
         {
-          name : "Payment Method",
-          href : `/site/${id}/payment`,
-          isActive : segments.includes("payment"),
-          icon : <BadgeDollarSignIcon width={18} className="text-green-500 shadow-md"/>
+          name: "Payment Method",
+          href: `/site/${id}/payment`,
+          isActive: segments.includes("payment"),
+          icon: <BadgeDollarSignIcon width={18} className="text-green-500 shadow-md" />
         },
         {
           name: "Analytics",
           href: `/site/${id}/analytics`,
           isActive: segments.includes("analytics"),
-          icon: <BarChart3 width={18}/>,
+          icon: <BarChart3 width={18} />,
         },
         {
           name: "Site Settings",
@@ -99,11 +95,6 @@ export default function Nav({ children }: { children: ReactNode }) {
         href: "/sites",
         icon: <Globe width={18} />,
       },
-      // {
-      //   name: "My Sites",
-      //   href: "/mySite",
-      //   icon: <Globe  width={18} />,
-      // },
       {
         name: "Product Categories",
         href: "/categories",
@@ -131,6 +122,8 @@ export default function Nav({ children }: { children: ReactNode }) {
     ];
   }, [segments]);
 
+  console.log({segments});
+
   const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
@@ -139,41 +132,11 @@ export default function Nav({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {/* Toggle Sidebar Button */}
-      <button
-        className="fixed z-20 top-5 right-5 sm:hidden p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
-        onClick={() => setShowSidebar(!showSidebar)}
-      >
-        <LayoutDashboard width={20} />
-      </button>
-
       {/* Sidebar */}
-      <div
-        className={`fixed z-10 h-full transform transition-transform sm:w-60 ${showSidebar ? "translate-x-0" : "-translate-x-full"
-          } sm:translate-x-0 bg-gray-900 text-gray-300 border-r border-gray-700`}
-      >
-        {/* Logo and Navigation Links */}
+      <div>
         <div className="flex flex-col justify-between h-full p-4">
           <div>
-            {/* Logo */}
-            <div className="flex items-center space-x-3 mb-6">
-              <Link href="/" className="flex items-center space-x-2">
-                <Image
-                  src="/ngatra-logo.svg"
-                  alt="Logo"
-                  width={36}
-                  height={36}
-                  className="rounded"
-                />
-                {/* <Select
-                  onChange={e => {
-                    console.log({ e });
 
-                  }} options={[1, 2, 3, 4]} /> */}
-              </Link>
-            </div>
-
-            {/* Navigation Links */}
             <div className="space-y-1">
               {tabs.map(({ name, href, isActive, icon }) => (
                 <Link
@@ -191,7 +154,6 @@ export default function Nav({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          {/* External Links */}
           <div className="space-y-1">
             {externalLinks.map(({ name, href, icon }) => (
               <a

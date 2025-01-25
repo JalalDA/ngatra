@@ -1,7 +1,9 @@
 import { Button } from '@tremor/react'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, PlusCircleIcon, SearchIcon } from 'lucide-react'
 import React from 'react'
 import ProviderItem from './provider-item'
+import AddDirectProvider from './add-direct-provider'
+import AddDirectProviderModal from './add-direct-provider-modal'
 
 type Props = {}
 
@@ -39,14 +41,15 @@ const YourProvider = (props: Props) => {
         },
     ]
     return (
-        <div className="border-gray-900 rounded-lg border-2 w-[80%] shadow-md">
-            {
-                data.map((item, index) => (
-                    <ProviderItem item={item.name} url={item.url} Icon={item.icon} key={index}/>
-                ))
-            }
-            <div className="flex items-center justify-center border-t border-gray-900 p-4">
-                <Button>Add Provider</Button>
+        <div className="border rounded-lg shadow-md">
+            <div className="h-60 w-full flex items-center justify-center gap-x-4">
+                <SearchIcon size={18} color='blue' className='animate-bounce'/> 
+                <h5 className='font-semibold'>Add providers to buy services from them</h5>
+            </div>
+            <div className="flex items-center justify-center border-t p-4">
+                <AddDirectProvider>
+                    <AddDirectProviderModal/>
+                </AddDirectProvider>
             </div>
         </div>
     )

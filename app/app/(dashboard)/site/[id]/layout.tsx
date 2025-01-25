@@ -1,9 +1,14 @@
+import Header from "@/components/header";
 import { ReactNode } from "react";
 
-export default function SiteLayout({ children }: { children: ReactNode }) {
+export default function SiteLayout({ children, params }: { children: ReactNode, params: { id: string } }) {
+
   return (
-    <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
-      <div className="flex flex-col space-y-6">{children}</div>
+    <div className="flex w-screen flex-col">
+      <Header id={params.id} />
+      <div className="flex flex-col space-y-6 p-6">
+        {children}
+      </div>
     </div>
   );
 }

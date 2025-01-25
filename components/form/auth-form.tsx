@@ -30,6 +30,7 @@ export function AuthForm({ }: {
                 password: data?.password
             })
             console.log({result});
+            
         } else {
             const response = await registerCredentials(data)
             if (response.status) {
