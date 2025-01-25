@@ -14,7 +14,7 @@ export default function DropdownWallet() {
       {/* Trigger Button */}
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 px-4 py-2 rounded-full text-green-600 font-semibold hover:bg-green-200"
+        className="flex items-center space-x-2 px-4 py-2 rounded-full text-green-600 font-semibold cursor-pointer"
       >
         <Wallet2Icon/>
         <span className="font-bold">IDR 0</span>

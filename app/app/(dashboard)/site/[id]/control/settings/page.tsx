@@ -1,4 +1,6 @@
+import DomainSettingsModal from '@/components/control/modal/domain-settings-modal'
 import FastOrderModal from '@/components/control/modal/fast-order-modal'
+import MetaDataModal from '@/components/control/modal/meta-data-modal'
 import ServiceSettingModal from '@/components/control/modal/service-settings-modal'
 import SettingsItem from '@/components/control/settings/settings-item'
 import { Switch } from '@/components/ui/switch'
@@ -59,18 +61,14 @@ const Settings = (props: Props) => {
             {/* metadata */}
             <div className="rounded-lg border shadow-sm flex items-start flex-col gap-y-2 w-full">
                 <div className="p-4 border-b flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
-                    <div className="flex items-center gap-x-2">
-                        <InspectIcon />
-                        <h5 className="font-semibold">Meta Data</h5>
-                    </div>
-                    <ChevronRightIcon />
+                    <SettingsItem rightIcon={<InspectIcon/>} title='Meta data' >
+                        <MetaDataModal/>
+                    </SettingsItem>
                 </div>
                 <div className="p-4 flex hover:shadow-lg cursor-pointer items-center justify-between w-full">
-                    <div className="flex items-center gap-x-2">
-                        <Globe2Icon />
-                        <h5 className="font-semibold">Domain Settings</h5>
-                    </div>
-                    <ChevronRightIcon />
+                    <SettingsItem rightIcon={<Globe2Icon/>} title='Domain Settings' >
+                        <DomainSettingsModal/>
+                    </SettingsItem>
                 </div>
             </div>
 

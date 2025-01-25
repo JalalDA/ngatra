@@ -22,6 +22,7 @@ import {
     Sparkles,
     Users,
     Layers,
+    BellDotIcon,
 } from "lucide-react";
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
@@ -133,6 +134,12 @@ export default function Sidebar() {
                 href: `/site/${id}/control/integrations`,
                 isActive: segments[0] === "integrations",
                 icon: <Layers width={18} />,
+            },
+            {
+                name: "Notification",
+                href: `/site/${id}/control/notification`,
+                isActive: segments[0] === "notification",
+                icon: <BellDotIcon width={18} />,
             }
         ];
     }, [segments]);
@@ -144,7 +151,7 @@ export default function Sidebar() {
     }, [pathname]);
 
     return (
-        <div className="md:w-1/6 h-[14rem]">
+        <div className="md:w-1/5 h-[14rem]">
             <div className="flex flex-col gap-y-4 justify-between h-full">
                 <div>
                     <div className="space-y-1 flex flex-col gap-y-4">
@@ -152,13 +159,13 @@ export default function Sidebar() {
                             <Link
                                 key={name}
                                 href={href}
-                                className={`flex items-center justify-between space-x-3 px-3 py-2 rounded-md transition-all text-black hover:bg-gray-800 hover:text-white ${isActive
+                                className={`flex text-md font-semibold items-center justify-between space-x-3 px-3 py-2 rounded-md transition-all text-black hover:bg-gray-800 hover:text-white ${isActive
                                     ? "bg-gray-100 shadow-md"
                                     : "hover:bg-gray-800 hover:text-white"
                                     }`}>
                                 <div className="flex items-center gap-x-4">
                                     {icon}
-                                    <span className="text-sm font-medium">{name}</span>
+                                    <span className="text-md font-semibold">{name}</span>
                                 </div>
                                 <ChevronRightIcon />
                             </Link>
@@ -177,7 +184,7 @@ export default function Sidebar() {
                                 }`}>
                             <div className="flex items-center space-x-3">
                                 {icon}
-                                <span className="text-sm font-medium">{name}</span>
+                                <span className="text-md font-semibold">{name}</span>
                             </div>
                                 <ChevronRightIcon />
                         </a>
