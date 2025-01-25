@@ -100,9 +100,7 @@ export default function AddManagersModal() {
                                     <Checkbox />
                                     <div className="text-md">Agent</div>
                                 </div>
-                                <div className="text-md">Can only answer in support,
-                                    see orders and services but cant edit.
-                                    Doesn't see providers and panel settings</div>
+                                <div className="text-md">{`Can only answer in support, see orders and services but cant edit. Doesn't see providers and panel settings`}</div>
                             </div>
                             <Image src={"/agent-role.png"} alt="admin-role" height={72} width={72} />
                         </div>
