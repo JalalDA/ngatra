@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Cta = () => {
   return (
-    <div className="min-h-screen bg-primary text-white flex flex-col items-center justify-center">
+    <div className="min-h-screen text-white flex flex-col items-center justify-center">
       <h1 className="text-4xl md:text-6xl font-bold text-center mb-8">
         We are trusted by<br /> thousands of users every day
       </h1>

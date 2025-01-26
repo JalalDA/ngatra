@@ -2,7 +2,7 @@ import React from 'react';
 
 const LaunchPanel = () => {
   return (
-    <div className="min-h-screen bg-primary text-white flex flex-col items-center py-10 px-4">
+    <div className="min-h-screen text-white flex flex-col items-center py-10 px-4">
       {/* Section Container */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
         {/* Left Card */}

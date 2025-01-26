@@ -13,7 +13,7 @@ const FeatureCards: React.FC = () => {
       {features.map((feature, index) => (
         <div
           key={index}
-          className="rounded-xl bg-black p-6 text-white shadow-lg hover:shadow-xl"
+          className="rounded-xl p-6 text-white shadow-lg hover:shadow-xl"
         >
           <h3 className="text-lg font-bold text-blue-400">{feature.title}</h3>
           <p className="mt-2 text-gray-400">{feature.subtitle}</p>

@@ -26,6 +26,7 @@ import {
   transaction,
   ETransactionStatus,
   TTransaction,
+  siteLanguage,
 } from "./schema";
 import { tr } from "date-fns/locale";
 import bcrypt from 'bcrypt'
@@ -34,7 +35,7 @@ import { signIn } from "next-auth/react";
 export type AuthFormInputs = {
   email: string;
   password: string;
-  username? : string;
+  username?: string;
 }
 
 const nanoid = customAlphabet(
@@ -640,6 +641,29 @@ export const editUser = async (
   }
 };
 
+export const createSiteLanguage = async (siteId:string) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const [response] = await db
+    .insert(siteLanguage)
+    .values({
+      siteId,
+      tagLine: 'Beli Layanan Sosmed Dan Buat Website Sosmed GRATIS DISINI',
+      beraneka: 'Beraneka ragam',
+      jumlahLayanan: 'Lebih dari 100 layanan dalam katalog',
+      berjalan: 'Semuanya berjalan otomatis',
+      realTime: 'Semuanya dilakukan secara realtime',
+      dukungan: 'Dukungan pelanggan terbaik',
+      agen: 'Agen kami akan selalu membantu anda',
+    })
+    .returning();
+    return response;
+}
+
 
 export const registerCredentials = async (data: AuthFormInputs) => {
   try {
@@ -685,8 +709,8 @@ export const signInCredentials = async (data: AuthFormInputs) => {
     const user = await db.query.users.findFirst({
       where: (user, { eq }) => eq(user.email, data.email),
     })
-    console.log({user});
-    
+    console.log({ user });
+
     if (!user) {
       return {
         status: false,

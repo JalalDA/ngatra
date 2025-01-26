@@ -1,9 +1,3 @@
-// import Navbar from "@/components/NavBar";
-// import FeatureCards from "@/components/landing/FeatureCards";
-// import Footer from "@/components/landing/Footer";
-// import Hero from "@/components/landing/HeroSection";
-// import ServiceCards from "@/components/landing/ServiceCards";
-"use client"
 
 import Navbar from "@/components/Navbar";
 import Cta from "@/components/landing/Cta";
@@ -12,18 +6,8 @@ import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/HeroSection";
 import LaunchPanel from "@/components/landing/LaunchPanel";
 import ServiceCards from "@/components/landing/ServiceCards";
-import axios from "axios";
-import { useEffect } from "react";
 
 export default async function Home() {
-
-  const getData = async () => {
-    const data = await axios.post(`/api/price-list`)
-    console.log({ data })
-  }
-  useEffect(() => {
-    getData()
-  }, [])
   return (
     <main className="flex flex-col items-center gap-6 px-3 py-10 bg-gradient-to-r from-purple-900 via-blue-900 to-black ">
       <Navbar />

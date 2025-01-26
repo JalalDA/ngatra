@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
 import db from "./db";
 import { and, desc, eq, not } from "drizzle-orm";
-import { posts, sites, users } from "./schema";
+import { posts, siteLanguage, sites, users } from "./schema";
 import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
 
@@ -93,14 +93,14 @@ export async function getPostData(domain: string, slug: string) {
         .then((res) =>
           res.length > 0
             ? {
-                ...res[0].post,
-                site: res[0].site
-                  ? {
-                      ...res[0].site,
-                      user: res[0].user,
-                    }
-                  : null,
-              }
+              ...res[0].post,
+              site: res[0].site
+                ? {
+                  ...res[0].site,
+                  user: res[0].user,
+                }
+                : null,
+            }
             : null,
         );
 
@@ -142,6 +142,35 @@ export async function getPostData(domain: string, slug: string) {
       tags: [`${domain}-${slug}`],
     },
   )();
+}
+
+export async function getLanguageData(domain: string) {
+  const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
+    ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
+    : null;
+  return await unstable_cache(
+    async () => {
+      const site = await db.query.sites.findFirst({
+        where: subdomain
+          ? eq(sites.subdomain, subdomain)
+          : eq(sites.customDomain, domain),
+      });
+      if (site) {
+        const languageData = await db.query.siteLanguage.findFirst({
+          where: eq(siteLanguage.siteId, site.id),
+        });
+        console.log({ site, languageData });
+        return languageData
+      } else {
+        return null
+      }
+    },
+    [],
+    {
+      revalidate: 900, // Cache akan direvalidasi setiap 15 menit
+    }
+  )()
+
 }
 
 async function getMdxSource(postContents: string) {

@@ -1,8 +1,14 @@
 "use client"
+import { TLanguage } from "@/lib/schema";
 import { BaggageClaim } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
-const Navbar: React.FC = () => {
+
+const Navbar = ({ language }
+  : 
+  { 
+    language: any
+  }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -49,9 +55,9 @@ const Navbar: React.FC = () => {
         </nav>
 
         {/* Sign In Button (Desktop) */}
-        <button onClick={()=>{
-              window.open("https://app.ngatrapanel.my.id")
-            }} className="hidden md:block rounded-md border border-gray-500 px-4 py-2 text-gray-300 hover:bg-gray-700">
+        <button onClick={() => {
+          window.open("https://app.ngatrapanel.my.id")
+        }} className="hidden md:block rounded-md border border-gray-500 px-4 py-2 text-gray-300 hover:bg-gray-700">
           Sign In
         </button>
 
@@ -112,7 +118,7 @@ const Navbar: React.FC = () => {
             <a href="#" className="hover:text-white">
               Blog
             </a>
-            <button onClick={()=>{
+            <button onClick={() => {
               window.open("https://app.ngatrapanel.my.id")
             }} className="rounded-md border border-gray-500 px-4 py-2 text-gray-300 hover:bg-gray-700">
               Sign In

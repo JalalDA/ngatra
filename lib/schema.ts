@@ -254,6 +254,20 @@ export const sitePaymentMethod = pgTable("sitePaymentMethod", {
   })
 });
 
+export const siteLanguage = pgTable("siteLanguage", {
+  id: text("id").primaryKey().$defaultFn(() => createId()),
+  siteId: text("siteId").references(() => sites.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  }),
+  tagLine: text("tagLine").default("BELI LAYANAN SOSMED DAN BUAT WEBSITE SOSMED GRATIS DISINI"),
+  beraneka: text("beraneka").default("Beraneka ragam"),
+  jumlahLayanan: text("jumlahLayanan").default("Lebih dari 100 layanan dalam katalog"),
+  berjalan: text("berjalan").default("Semuanya berjalan otomatis"),
+  realTime: text("realTime").default("Semuanya dilakukan secara realtime"),
+  dukungan: text("dukungan").default("Dukungan pelanggan terbaik"),
+  agen: text("agen").default("Agen kami akan selalu membantu anda")
+})
 
 export const transactionEnum = pgEnum("transaction_status", [
   "waiting_payment",
@@ -293,6 +307,7 @@ export const sitesRelations = relations(sites, ({ one, many }) => ({
   posts: many(posts),
   transaction: many(transaction),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
+  siteLanguage: many(siteLanguage)
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -332,6 +347,7 @@ export const transactionRelations = relations(transaction, ({ one }) => ({
 export type TSite = typeof sites.$inferSelect;
 export type TPost = typeof posts.$inferSelect;
 export type TExample = typeof examples.$inferSelect;
+export type TLanguage = typeof siteLanguage.$inferSelect
 export type TCategory = typeof category.$inferSelect;
 export type TProduct = typeof product.$inferSelect;
 export type TTransaction = typeof transaction.$inferSelect;

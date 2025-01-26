@@ -24,7 +24,7 @@ const ServiceCards: React.FC = () => {
       {services.map((service, index) => (
         <div
           key={index}
-          className="relative flex flex-col items-center justify-between rounded-lg bg-gray-800 p-4 text-white shadow-md hover:shadow-xl"
+          className="relative flex flex-col items-center justify-between rounded-lg p-4 text-white shadow-md hover:shadow-xl"
         >
           <h3 className="text-lg font-semibold">{service.name}</h3>
           <p className="mt-2 text-2xl font-bold">{service.price}</p>

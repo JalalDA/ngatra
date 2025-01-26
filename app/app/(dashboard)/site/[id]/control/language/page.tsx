@@ -1,5 +1,7 @@
 "use client"
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { createSiteLanguage } from '@/lib/actions'
 import { Code2Icon, DollarSignIcon, FileWarningIcon, FilterIcon, LayoutDashboardIcon, LockIcon, PanelBottom, SettingsIcon, SparklesIcon } from 'lucide-react'
 import React, { useState } from 'react'
 
@@ -67,6 +69,13 @@ const Language = (props: Props) => {
   return (
     <div className='flex flex-col gap-y-4 md:w-full'>
       <div className="text-md font-semibold text-xl">Language Settings</div>
+      <form action={
+        async () => {
+          createSiteLanguage(`kovn5mt7pfe50rgygdapa5q1`)
+        }
+      }>
+        <Button type='submit'>Buat Language</Button>
+      </form>
       <div className="flex items-start gap-x-4 justify-between">
         <div className="w-1/4 border rounded-md min-h-screen">
           {
