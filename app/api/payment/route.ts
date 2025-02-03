@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 import { Midtrans } from 'midtrans-client-typescript'
 import { generateOrderId } from "@/lib/generate";

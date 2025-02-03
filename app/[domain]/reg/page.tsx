@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
-const AuthPage = async ({
+const RegPage = async ({
     params,
 }: {
     params: { domain: string };
@@ -35,26 +35,30 @@ const AuthPage = async ({
                     <Input type='text' />
                 </div>
                 <div className='flex flex-col gap-y-2 md:w-1/3'>
+                    <label htmlFor="">Username</label>
+                    <Input type='text' />
+                </div>
+                <div className='flex flex-col gap-y-2 md:w-1/3'>
                     <label htmlFor="">Password</label>
                     <Input type='text' />
                 </div>
-                <Link href={"/reg"} className='md:w-1/3 flex items-center'>
-                    <button
-                        type="button"
-                        className="rounded-md border md:w-1/3 border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-600 bg-gray-800 text-white dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
-                    >
-                        Create Account
-                    </button>
-                </Link>
+                <button
+                    type="button"
+                    className="rounded-md border md:w-1/3 border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-600 bg-gray-800 text-white dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
+                >
+                    Create Account
+                </button>
+                <Link href={"/auth"} className='md:w-1/3 flex items-center'>
                 <button
                     type="button"
                     className="rounded-md border md:w-1/3 border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
                 >
                     Sign in
                 </button>
+                </Link>
             </form>
         </div>
     )
 }
 
-export default AuthPage
+export default RegPage

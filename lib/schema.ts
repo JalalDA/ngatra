@@ -15,7 +15,7 @@ import {
   char,
   pgEnum,
 } from "drizzle-orm/pg-core";
-export const userRole = pgEnum("user_role", ["admin", "user"]);
+export const userRole = pgEnum("user_role", ["admin", "user", "customer"]);
 export const users = pgTable("users", {
   id: text("id")
     .primaryKey()
@@ -218,7 +218,6 @@ export const masterVendor = pgTable("masterVendor", {
     .$defaultFn(() => createId()),
   vendorName: text("vendorName"),
 });
-
 export const masterPaymentMethod = pgTable("masterPaymentMethod", {
   id: text("id")
     .primaryKey()
@@ -275,7 +274,6 @@ export const transactionEnum = pgEnum("transaction_status", [
   "completed",
   "failed",
 ]);
-
 export const transaction = pgTable("transaction", {
   id: text("id")
     .primaryKey()
@@ -297,12 +295,10 @@ export const transaction = pgTable("transaction", {
   status: transactionEnum("status").notNull(),
   timestamp: timestamp("timestamp", { mode: "date" }).defaultNow().notNull(),
 });
-
 export const postsRelations = relations(posts, ({ one }) => ({
   site: one(sites, { references: [sites.id], fields: [posts.siteId] }),
   user: one(users, { references: [users.id], fields: [posts.userId] }),
 }));
-
 export const sitesRelations = relations(sites, ({ one, many }) => ({
   posts: many(posts),
   transaction: many(transaction),

@@ -10,8 +10,8 @@ import ServiceCards from "@/components/landing/ServiceCards";
 export default async function Home() {
   return (
     <main className="flex flex-col items-center gap-6 px-3 py-10 bg-gradient-to-r from-purple-900 via-blue-900 to-black ">
-      <Navbar />
-      <Hero />
+      <Navbar data={undefined} language={undefined} />
+      <Hero language={undefined} />
       <LaunchPanel />
       <section className="container mx-auto mt-10 px-4">
         <FeatureCards />

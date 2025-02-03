@@ -1,13 +1,15 @@
 "use client"
-import { TLanguage } from "@/lib/schema";
+import { TLanguage, TSite } from "@/lib/schema";
 import { BaggageClaim } from "lucide-react";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 
-const Navbar = ({ language }
-  : 
-  { 
-    language: any
+const Navbar = ({ data, language }
+  :
+  {
+    data: TSite | undefined,
+    language: TLanguage | undefined;
   }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,34 +34,26 @@ const Navbar = ({ language }
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <h1 className="text-2xl font-bold text-white flex items-center justify-center gap-x-2">
-          <BaggageClaim />
+          {data?.image && (
+            <img
+              src={data?.image}
+              alt="Logo"
+              className="w-10 h-10 rounded-full"
+            />
+          )}
           <div>
-            Ngatra Panel
+            {data?.name}
           </div>
         </h1>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8 text-gray-300">
-          <a href="#" className="hover:text-white">
-            For performers
-          </a>
-          <a href="#" className="hover:text-white">
-            Direct providers
-          </a>
-          <a href="#" className="hover:text-white">
-            Pricing
-          </a>
-          <a href="#" className="hover:text-white">
-            Blog
-          </a>
-        </nav>
+
 
         {/* Sign In Button (Desktop) */}
-        <button onClick={() => {
-          window.open("https://app.ngatrapanel.my.id")
-        }} className="hidden md:block rounded-md border border-gray-500 px-4 py-2 text-gray-300 hover:bg-gray-700">
-          Sign In
-        </button>
+        <Link href={"/auth"}>
+          <button className="hidden md:block rounded-md border border-gray-500 px-4 py-2 text-gray-300 hover:bg-gray-700">
+            Sign In
+          </button>
+        </Link>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">

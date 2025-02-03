@@ -42,13 +42,13 @@ export default async function SiteHomePage({
     getLanguageData(domain)
   ]);
 
-  if (!data) {
+  if (!data || !language) {
     notFound();
   }
 
   return (
     <main className="flex flex-col items-center gap-6 px-3 py-10 bg-gradient-to-r from-purple-900 via-blue-900 to-black ">
-      <Navbar language={language}/>
+      <Navbar data={data} language={language} />
       <Hero language={language}/>
       <LaunchPanel />
       <section className="container mx-auto mt-10 px-4">

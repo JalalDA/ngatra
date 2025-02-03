@@ -648,6 +648,7 @@ export const createSiteLanguage = async (siteId:string) => {
       error: "Not authenticated",
     };
   }
+
   const [response] = await db
     .insert(siteLanguage)
     .values({
